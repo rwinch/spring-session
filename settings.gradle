@@ -4,6 +4,7 @@ include 'docs'
 
 include 'samples:boot'
 include 'samples:spring-embedded-redis'
+include 'samples:grails3'
 include 'samples:hazelcast'
 include 'samples:httpsession'
 include 'samples:httpsession-xml'
