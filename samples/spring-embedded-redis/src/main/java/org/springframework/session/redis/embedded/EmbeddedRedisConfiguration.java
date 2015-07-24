@@ -97,6 +97,17 @@ class EmbeddedRedisConfiguration {
 		private static int getAvailablePort() {
 			ServerSocket socket = null;
 			try {
+				socket = new ServerSocket(6379);
+				return socket.getLocalPort();
+			} catch(IOException e) {
+			} finally {
+				try {
+					if(socket != null) {
+						socket.close();
+					}
+				}catch(IOException e) {}
+			}
+			try {
 				socket = new ServerSocket(0);
 				return socket.getLocalPort();
 			} catch(IOException e) {
