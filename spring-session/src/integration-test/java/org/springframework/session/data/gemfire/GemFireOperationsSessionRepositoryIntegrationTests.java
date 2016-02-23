@@ -18,7 +18,6 @@ package org.springframework.session.data.gemfire;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME;
-import static org.springframework.session.data.gemfire.GemFireOperationsSessionRepository.GemFireSession;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,7 +37,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.session.ExpiringSession;
 import org.springframework.session.FindByIndexNameSessionRepository;
-import org.springframework.session.data.gemfire.config.annotation.web.http.EnableGemFireHttpSession;
+import org.springframework.session.data.gemfire.AbstractGemfireOperationsSessionRepository.GemfireSession;
+import org.springframework.session.data.gemfire.config.annotation.web.http.EnableGemfireHttpSession;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -56,14 +56,14 @@ import com.gemstone.gemfire.pdx.PdxSerializable;
 import com.gemstone.gemfire.pdx.PdxWriter;
 
 /**
- * The GemFireOperationsSessionRepositoryIntegrationTests class is a test suite of test cases testing
- * the findByPrincipalName query method on the GemFireOpeationsSessionRepository class.
+ * The GemfireOperationsSessionRepositoryIntegrationTests class is a test suite of test cases testing
+ * the findByPrincipalName query method on the GemfireOpeationsSessionRepository class.
  *
  * @author John Blum
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
- * @see org.springframework.session.data.gemfire.AbstractGemFireIntegrationTests
- * @see org.springframework.session.data.gemfire.GemFireOperationsSessionRepository
+ * @see org.springframework.session.data.gemfire.AbstractGemfireIntegrationTests
+ * @see org.springframework.session.data.gemfire.GemfireOperationsSessionRepository
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
  * @see org.springframework.test.context.web.WebAppConfiguration
@@ -72,7 +72,7 @@ import com.gemstone.gemfire.pdx.PdxWriter;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @WebAppConfiguration
-public class GemFireOperationsSessionRepositoryIntegrationTests extends AbstractGemFireIntegrationTests {
+public class GemfireOperationsSessionRepositoryIntegrationTests extends AbstractGemfireIntegrationTests {
 
 	private static final int MAX_INACTIVE_INTERVAL_IN_SECONDS = 300;
 
@@ -120,7 +120,7 @@ public class GemFireOperationsSessionRepositoryIntegrationTests extends Abstract
 
 			QueryService queryService = region.getRegionService().getQueryService();
 
-			String queryString = String.format(GemFireOperationsSessionRepository.FIND_SESSIONS_BY_PRINCIPAL_NAME_QUERY,
+			String queryString = String.format(GemfireOperationsSessionRepository.FIND_SESSIONS_BY_PRINCIPAL_NAME_QUERY,
 				region.getFullPath());
 
 			Query query = queryService.newQuery(queryString);
@@ -284,9 +284,9 @@ public class GemFireOperationsSessionRepositoryIntegrationTests extends Abstract
 	public void saveAndReadSessionWithAttributes() {
 		ExpiringSession expectedSession = gemfireSessionRepository.createSession();
 
-		assertThat(expectedSession).isInstanceOf(GemFireSession.class);
+		assertThat(expectedSession).isInstanceOf(GemfireSession.class);
 
-		((GemFireSession) expectedSession).setPrincipalName("jblum");
+		((GemfireSession) expectedSession).setPrincipalName("jblum");
 
 		List<String> expectedAttributeNames = Arrays.asList(
 			"booleanAttribute", "numericAttribute", "stringAttribute", "personAttribute");
@@ -303,8 +303,8 @@ public class GemFireOperationsSessionRepositoryIntegrationTests extends Abstract
 		ExpiringSession savedSession = gemfireSessionRepository.getSession(expectedSession.getId());
 
 		assertThat(savedSession).isEqualTo(expectedSession);
-		assertThat(savedSession).isInstanceOf(GemFireSession.class);
-		assertThat(((GemFireSession) savedSession).getPrincipalName()).isEqualTo("jblum");
+		assertThat(savedSession).isInstanceOf(GemfireSession.class);
+		assertThat(((GemfireSession) savedSession).getPrincipalName()).isEqualTo("jblum");
 
 		assertThat(savedSession.getAttributeNames().containsAll(expectedAttributeNames)).as(
 			String.format("Expected (%1$s); but was (%2$s)", expectedAttributeNames,savedSession.getAttributeNames()))
@@ -325,15 +325,15 @@ public class GemFireOperationsSessionRepositoryIntegrationTests extends Abstract
 		return changedContext.getAuthentication().getName();
 	}
 
-	@EnableGemFireHttpSession(regionName = SPRING_SESSION_GEMFIRE_REGION_NAME,
+	@EnableGemfireHttpSession(regionName = SPRING_SESSION_GEMFIRE_REGION_NAME,
 		maxInactiveIntervalInSeconds = MAX_INACTIVE_INTERVAL_IN_SECONDS)
-	static class SpringSessionGemFireConfiguration {
+	static class SpringSessionGemfireConfiguration {
 
 		@Bean
 		Properties gemfireProperties() {
 			Properties gemfireProperties = new Properties();
 
-			gemfireProperties.setProperty("name", GemFireOperationsSessionRepositoryIntegrationTests.class.getName());
+			gemfireProperties.setProperty("name", GemfireOperationsSessionRepositoryIntegrationTests.class.getName());
 			gemfireProperties.setProperty("mcast-port", "0");
 			gemfireProperties.setProperty("log-level", GEMFIRE_LOG_LEVEL);
 

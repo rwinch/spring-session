@@ -22,8 +22,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.session.ExpiringSession;
-import org.springframework.session.data.gemfire.AbstractGemFireIntegrationTests;
-import org.springframework.session.data.gemfire.support.GemFireUtils;
+import org.springframework.session.data.gemfire.AbstractGemfireIntegrationTests;
+import org.springframework.session.data.gemfire.support.GemfireUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -36,13 +36,13 @@ import com.gemstone.gemfire.cache.query.Index;
 import com.gemstone.gemfire.cache.query.QueryService;
 
 /**
- * The GemFireHttpSessionXmlConfigurationTests class is a test suite of test cases testing the configuration of
+ * The GemfireHttpSessionXmlConfigurationTests class is a test suite of test cases testing the configuration of
  * Spring Session backed by GemFire using XML configuration meta-data.
  *
  * @author John Blum
  * @see org.junit.Test
  * @see org.springframework.session.ExpiringSession
- * @see org.springframework.session.data.gemfire.AbstractGemFireIntegrationTests
+ * @see org.springframework.session.data.gemfire.AbstractGemfireIntegrationTests
  * @see org.springframework.test.context.ContextConfiguration
  * @see org.springframework.test.context.web.WebAppConfiguration
  * @see org.springframework.test.context.junit4.SpringJUnit4ClassRunner
@@ -51,13 +51,13 @@ import com.gemstone.gemfire.cache.query.QueryService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @WebAppConfiguration
-public class GemFireHttpSessionXmlConfigurationTests extends AbstractGemFireIntegrationTests {
+public class GemfireHttpSessionXmlConfigurationTests extends AbstractGemfireIntegrationTests {
 
 	@Autowired
 	private Cache gemfireCache;
 
 	protected <K, V> Region<K, V> assertCacheAndRegion(Cache gemfireCache, String regionName, DataPolicy dataPolicy) {
-		assertThat(GemFireUtils.isPeer(gemfireCache)).isTrue();
+		assertThat(GemfireUtils.isPeer(gemfireCache)).isTrue();
 
 		Region<K, V> region = gemfireCache.getRegion(regionName);
 
@@ -74,7 +74,7 @@ public class GemFireHttpSessionXmlConfigurationTests extends AbstractGemFireInte
 	}
 
 	@Test
-	public void verifyGemFireExampleCacheRegionPrincipalNameIndexWasCreatedSuccessfully() {
+	public void verifyGemfireExampleCacheRegionPrincipalNameIndexWasCreatedSuccessfully() {
 		Region<Object, ExpiringSession> example = assertCacheAndRegion(gemfireCache, "Example", DataPolicy.NORMAL);
 
 		QueryService queryService = example.getRegionService().getQueryService();
@@ -87,7 +87,7 @@ public class GemFireHttpSessionXmlConfigurationTests extends AbstractGemFireInte
 	}
 
 	@Test
-	public void verifyGemFireExampleCacheRegionSessionAttributesIndexWasCreatedSuccessfully() {
+	public void verifyGemfireExampleCacheRegionSessionAttributesIndexWasCreatedSuccessfully() {
 		Region<Object, ExpiringSession> example = assertCacheAndRegion(gemfireCache, "Example", DataPolicy.NORMAL);
 
 		QueryService queryService = example.getRegionService().getQueryService();

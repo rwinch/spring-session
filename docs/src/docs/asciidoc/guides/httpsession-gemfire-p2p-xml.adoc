@@ -84,7 +84,7 @@ Add the following Spring Configuration:
 include::{samples-dir}httpsession-gemfire-p2p-xml/src/main/webapp/WEB-INF/spring/session.xml[tags=beans]
 ----
 
-<1> We use the combination of `<context:annotation-config/>` and `GemFireHttpSessionConfiguration` because Spring Session
+<1> We use the combination of `<context:annotation-config/>` and `GemfireHttpSessionConfiguration` because Spring Session
 does not yet provide XML Namespace support (see https://github.com/spring-projects/spring-session/issues/104[gh-104]).
 This creates a Spring bean with the name of `springSessionRepositoryFilter` that implements `Filter`. The filter is what
 replaces the `HttpSession` with an implementation backed by Spring Session.

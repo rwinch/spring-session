@@ -25,17 +25,17 @@ import org.springframework.session.ExpiringSession;
 import com.gemstone.gemfire.cache.query.SelectResults;
 
 /**
- * The GemFireOperationsSessionRepository class is a Spring SessionRepository implementation that interfaces with
+ * The GemfireOperationsSessionRepository class is a Spring SessionRepository implementation that interfaces with
  * and uses GemFire to back and store Spring Sessions.
  *
  * @author John Blum
  * @see org.springframework.data.gemfire.GemfireOperations
  * @see org.springframework.session.ExpiringSession
  * @see org.springframework.session.Session
- * @see org.springframework.session.data.gemfire.AbstractGemFireOperationsSessionRepository
+ * @see org.springframework.session.data.gemfire.AbstractGemfireOperationsSessionRepository
  * @since 1.1.0
  */
-public class GemFireOperationsSessionRepository extends AbstractGemFireOperationsSessionRepository {
+public class GemfireOperationsSessionRepository extends AbstractGemfireOperationsSessionRepository {
 
 	// GemFire OQL query used to lookup Sessions by arbitrary attributes.
 	protected static final String FIND_SESSIONS_BY_INDEX_NAME_VALUE_QUERY =
@@ -46,13 +46,13 @@ public class GemFireOperationsSessionRepository extends AbstractGemFireOperation
 		"SELECT s FROM %1$s s WHERE s.principalName = $1";
 
 	/**
-	 * Constructs an instance of GemFireOperationsSessionRepository initialized with the required GemfireOperations
+	 * Constructs an instance of GemfireOperationsSessionRepository initialized with the required GemfireOperations
 	 * object used to perform data access operations to manage Session state.
 	 *
 	 * @param template the GemfireOperations object used to access and manage Session state in GemFire.
 	 * @see org.springframework.data.gemfire.GemfireOperations
 	 */
-	public GemFireOperationsSessionRepository(GemfireOperations template) {
+	public GemfireOperationsSessionRepository(GemfireOperations template) {
 		super(template);
 	}
 
@@ -95,12 +95,12 @@ public class GemFireOperationsSessionRepository extends AbstractGemFireOperation
 	 * Constructs a new {@link ExpiringSession} instance backed by GemFire.
 	 *
 	 * @return an instance of {@link ExpiringSession} backed by GemFire.
-	 * @see org.springframework.session.data.gemfire.GemFireOperationsSessionRepository.GemFireSession#create(int)
+	 * @see org.springframework.session.data.gemfire.GemfireOperationsSessionRepository.GemfireSession#create(int)
 	 * @see org.springframework.session.ExpiringSession
 	 * @see #getMaxInactiveIntervalInSeconds()
 	 */
 	public ExpiringSession createSession() {
-		return GemFireSession.create(getMaxInactiveIntervalInSeconds());
+		return GemfireSession.create(getMaxInactiveIntervalInSeconds());
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class GemFireOperationsSessionRepository extends AbstractGemFireOperation
 	 *
 	 * @param sessionId a String indicating the ID of the Session to get.
 	 * @return an existing {@link ExpiringSession} by ID or null if not Session exists.
-	 * @see org.springframework.session.data.gemfire.GemFireOperationsSessionRepository.GemFireSession#from(ExpiringSession)
+	 * @see org.springframework.session.data.gemfire.GemfireOperationsSessionRepository.GemfireSession#from(ExpiringSession)
 	 * @see org.springframework.session.ExpiringSession
 	 * @see #delete(String)
 	 */
@@ -121,7 +121,7 @@ public class GemFireOperationsSessionRepository extends AbstractGemFireOperation
 				delete(storedSession.getId());
 			}
 			else {
-				return GemFireSession.from(storedSession);
+				return GemfireSession.from(storedSession);
 			}
 		}
 
@@ -136,7 +136,7 @@ public class GemFireOperationsSessionRepository extends AbstractGemFireOperation
 	 * @see org.springframework.session.ExpiringSession
 	 */
 	public void save(ExpiringSession session) {
-		getTemplate().put(session.getId(), new GemFireSession(session));
+		getTemplate().put(session.getId(), new GemfireSession(session));
 	}
 
 	/**

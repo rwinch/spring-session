@@ -19,17 +19,17 @@ import java.util.Properties;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.CacheFactoryBean;
-import org.springframework.session.data.gemfire.config.annotation.web.http.EnableGemFireHttpSession;
+import org.springframework.session.data.gemfire.config.annotation.web.http.EnableGemfireHttpSession;
 
 // tag::class[]
-@EnableGemFireHttpSession // <1>
+@EnableGemfireHttpSession // <1>
 public class Config {
 
 	@Bean
 	Properties gemfireProperties() { // <2>
 		Properties gemfireProperties = new Properties();
 
-		gemfireProperties.setProperty("name", "GemFireP2PHttpSessionSample");
+		gemfireProperties.setProperty("name", "GemfireP2PHttpSessionSample");
 		gemfireProperties.setProperty("mcast-port", "0");
 		gemfireProperties.setProperty("log-level",
 			System.getProperty("sample.httpsession.gemfire.log-level", "warning"));

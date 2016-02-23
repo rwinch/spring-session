@@ -32,8 +32,8 @@ import org.springframework.data.gemfire.client.ClientCacheFactoryBean;
 import org.springframework.data.gemfire.client.PoolFactoryBean;
 import org.springframework.data.gemfire.config.GemfireConstants;
 import org.springframework.data.gemfire.support.ConnectionEndpoint;
-import org.springframework.session.data.gemfire.config.annotation.web.http.EnableGemFireHttpSession;
-import org.springframework.session.data.gemfire.support.GemFireUtils;
+import org.springframework.session.data.gemfire.config.annotation.web.http.EnableGemfireHttpSession;
+import org.springframework.session.data.gemfire.support.GemfireUtils;
 import org.springframework.util.Assert;
 
 import com.gemstone.gemfire.cache.client.Pool;
@@ -42,7 +42,7 @@ import com.gemstone.gemfire.management.membership.ClientMembershipEvent;
 import com.gemstone.gemfire.management.membership.ClientMembershipListenerAdapter;
 
 // tag::class[]
-@EnableGemFireHttpSession(maxInactiveIntervalInSeconds = 30) // <1>
+@EnableGemfireHttpSession(maxInactiveIntervalInSeconds = 30) // <1>
 public class ClientConfig {
 
 	static final long DEFAULT_WAIT_DURATION = TimeUnit.SECONDS.toMillis(20);
@@ -171,7 +171,7 @@ public class ClientConfig {
 				catch (IOException ignore) {
 				}
 				finally {
-					GemFireUtils.close(socket);
+					GemfireUtils.close(socket);
 				}
 
 				return connected.get();

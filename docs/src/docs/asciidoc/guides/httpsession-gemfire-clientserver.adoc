@@ -83,7 +83,7 @@ Add the following Spring Configuration:
 include::{samples-dir}httpsession-gemfire-clientserver/src/main/java/sample/ClientConfig.java[tags=class]
 ----
 
-<1> The `@EnableGemFireHttpSession` annotation creates a Spring bean named `springSessionRepositoryFilter` that
+<1> The `@EnableGemfireHttpSession` annotation creates a Spring bean named `springSessionRepositoryFilter` that
 implements `Filter`. The filter is what replaces the `HttpSession` with an implementation backed by Spring Session.
 In this instance, Spring Session is backed by GemFire.
 <2> Next, we register a `Properties` bean that allows us to configure certain aspects of the GemFire client cache
@@ -119,7 +119,7 @@ important for single-hop, direct data access.  See more details about the http:/
 
 NOTE: For more information on configuring _Spring Data GemFire_, refer to the http://docs.spring.io/spring-data-gemfire/docs/current/reference/html/[reference guide].
 
-The `@EnableGemFireHttpSession` annotation enables a developer to configure certain aspects of both Spring Session
+The `@EnableGemfireHttpSession` annotation enables a developer to configure certain aspects of both Spring Session
 and GemFire out-of-the-box using the following attributes:
 
 * `maxInactiveIntervalInSeconds` - controls HttpSession idle-timeout expiration (defaults to **30 minutes**).
@@ -149,7 +149,7 @@ In this sample, we will use the following GemFire Server Java Configuration:
 include::{samples-dir}httpsession-gemfire-clientserver/src/main/java/sample/ServerConfig.java[tags=class]
 ----
 
-<1> On the server, we also configure Spring Session using the `@EnableGemFireHttpSession` annotation. For one, this
+<1> On the server, we also configure Spring Session using the `@EnableGemfireHttpSession` annotation. For one, this
 ensures that the Region names on both the client and server match (in this sample, we use the default "_ClusteredSpringSessions_").
 We have also set the session timeout to **30 seconds**. Later, we will see how this timeout is used.
 <2> Next, we configure the GemFire Server using GemFire System properties very much like our P2P samples.

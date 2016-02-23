@@ -46,7 +46,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.session.ExpiringSession;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.Session;
-import org.springframework.session.data.gemfire.config.annotation.web.http.GemFireHttpSessionConfiguration;
+import org.springframework.session.data.gemfire.config.annotation.web.http.GemfireHttpSessionConfiguration;
 import org.springframework.session.events.SessionCreatedEvent;
 import org.springframework.session.events.SessionDeletedEvent;
 import org.springframework.session.events.SessionDestroyedEvent;
@@ -64,7 +64,7 @@ import com.gemstone.gemfire.cache.Region;
 import com.gemstone.gemfire.cache.util.CacheListenerAdapter;
 
 /**
- * AbstractGemFireOperationsSessionRepository is an abstract base class encapsulating functionality common
+ * AbstractGemfireOperationsSessionRepository is an abstract base class encapsulating functionality common
  * to all implementations that support SessionRepository operations backed by GemFire.
  *
  * @author John Blum
@@ -76,16 +76,16 @@ import com.gemstone.gemfire.cache.util.CacheListenerAdapter;
  * @see org.springframework.session.ExpiringSession
  * @see org.springframework.session.FindByIndexNameSessionRepository
  * @see org.springframework.session.Session
- * @see org.springframework.session.data.gemfire.config.annotation.web.http.GemFireHttpSessionConfiguration
+ * @see org.springframework.session.data.gemfire.config.annotation.web.http.GemfireHttpSessionConfiguration
  * @see com.gemstone.gemfire.cache.Region
  * @see com.gemstone.gemfire.cache.util.CacheListenerAdapter
  * @since 1.1.0
  */
-public abstract class AbstractGemFireOperationsSessionRepository extends CacheListenerAdapter<Object, ExpiringSession>
+public abstract class AbstractGemfireOperationsSessionRepository extends CacheListenerAdapter<Object, ExpiringSession>
 		implements InitializingBean, FindByIndexNameSessionRepository<ExpiringSession>,
 			ApplicationEventPublisherAware {
 
-	private int maxInactiveIntervalInSeconds = GemFireHttpSessionConfiguration.DEFAULT_MAX_INACTIVE_INTERVAL_IN_SECONDS;
+	private int maxInactiveIntervalInSeconds = GemfireHttpSessionConfiguration.DEFAULT_MAX_INACTIVE_INTERVAL_IN_SECONDS;
 
 	private ApplicationEventPublisher applicationEventPublisher = new ApplicationEventPublisher() {
 		public void publishEvent(ApplicationEvent event) {
@@ -99,13 +99,13 @@ public abstract class AbstractGemFireOperationsSessionRepository extends CacheLi
 	private String fullyQualifiedRegionName;
 
 	/**
-	 * Constructs an instance of AbstractGemFireOperationsSessionRepository with a required GemfireOperations instance
+	 * Constructs an instance of AbstractGemfireOperationsSessionRepository with a required GemfireOperations instance
 	 * used to perform GemFire data access operations and interactions supporting the SessionRepository operations.
 	 *
 	 * @param template the GemfireOperations instance used to interact with GemFire.
 	 * @see org.springframework.data.gemfire.GemfireOperations
 	 */
-	public AbstractGemFireOperationsSessionRepository(GemfireOperations template) {
+	public AbstractGemfireOperationsSessionRepository(GemfireOperations template) {
 		Assert.notNull(template, "GemfireOperations must not be null");
 		this.template = template;
 	}
@@ -309,20 +309,20 @@ public abstract class AbstractGemFireOperationsSessionRepository extends CacheLi
 	}
 
 	/**
-	 * GemFireSession is a GemFire representation model of a Spring {@link ExpiringSession} for storing and accessing
+	 * GemfireSession is a GemFire representation model of a Spring {@link ExpiringSession} for storing and accessing
 	 * Session state information in GemFire.  This class implements GemFire's {@link DataSerializable} interface
 	 * to better handle replication of Session information across the GemFire cluster.
 	 *
 	 * @see java.lang.Comparable
 	 * @see org.springframework.session.ExpiringSession
-	 * @see org.springframework.session.data.gemfire.AbstractGemFireOperationsSessionRepository.GemFireSessionAttributes
+	 * @see org.springframework.session.data.gemfire.AbstractGemfireOperationsSessionRepository.GemfireSessionAttributes
 	 * @see com.gemstone.gemfire.DataSerializable
 	 * @see com.gemstone.gemfire.DataSerializer
 	 * @see com.gemstone.gemfire.Delta
 	 * @see com.gemstone.gemfire.Instantiator
 	 */
 	@SuppressWarnings("serial")
-	public static class GemFireSession implements Comparable<ExpiringSession>, DataSerializable, Delta, ExpiringSession {
+	public static class GemfireSession implements Comparable<ExpiringSession>, DataSerializable, Delta, ExpiringSession {
 
 		protected static final boolean DEFAULT_ALLOW_JAVA_SERIALIZATION = true;
 
@@ -331,9 +331,9 @@ public abstract class AbstractGemFireOperationsSessionRepository extends CacheLi
 		protected static final String SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
 
 		static {
-			Instantiator.register(new Instantiator(GemFireSession.class, 800813552) {
+			Instantiator.register(new Instantiator(GemfireSession.class, 800813552) {
 				@Override public DataSerializable newInstance() {
-					return new GemFireSession();
+					return new GemfireSession();
 				}
 			});
 		}
@@ -345,26 +345,26 @@ public abstract class AbstractGemFireOperationsSessionRepository extends CacheLi
 		private long creationTime;
 		private long lastAccessedTime;
 
-		private transient final GemFireSessionAttributes sessionAttributes = new GemFireSessionAttributes(this);
+		private transient final GemfireSessionAttributes sessionAttributes = new GemfireSessionAttributes(this);
 
 		private transient final SpelExpressionParser parser = new SpelExpressionParser();
 
 		private String id;
 
 		/* (non-Javadoc) */
-		protected GemFireSession() {
+		protected GemfireSession() {
 			this(UUID.randomUUID().toString());
 		}
 
 		/* (non-Javadoc) */
-		protected GemFireSession(String id) {
+		protected GemfireSession(String id) {
 			this.id = validateId(id);
 			this.creationTime = System.currentTimeMillis();
 			this.lastAccessedTime = this.creationTime;
 		}
 
 		/* (non-Javadoc) */
-		protected GemFireSession(ExpiringSession session) {
+		protected GemfireSession(ExpiringSession session) {
 			Assert.notNull(session, "The ExpiringSession to copy cannot be null");
 
 			this.id = session.getId();
@@ -375,15 +375,15 @@ public abstract class AbstractGemFireOperationsSessionRepository extends CacheLi
 		}
 
 		/* (non-Javadoc) */
-		public static GemFireSession create(int maxInactiveIntervalInSeconds) {
-			GemFireSession session = new GemFireSession();
+		public static GemfireSession create(int maxInactiveIntervalInSeconds) {
+			GemfireSession session = new GemfireSession();
 			session.setMaxInactiveIntervalInSeconds(maxInactiveIntervalInSeconds);
 			return session;
 		}
 
 		/* (non-Javadoc) */
-		public static GemFireSession from(ExpiringSession expiringSession) {
-			GemFireSession session = new GemFireSession(expiringSession);
+		public static GemfireSession from(ExpiringSession expiringSession) {
+			GemfireSession session = new GemfireSession(expiringSession);
 			session.setLastAccessedTime(System.currentTimeMillis());
 			return session;
 		}
@@ -430,7 +430,7 @@ public abstract class AbstractGemFireOperationsSessionRepository extends CacheLi
 		}
 
 		/* (non-Javadoc) */
-		public GemFireSessionAttributes getAttributes() {
+		public GemfireSessionAttributes getAttributes() {
 			return sessionAttributes;
 		}
 
@@ -530,7 +530,7 @@ public abstract class AbstractGemFireOperationsSessionRepository extends CacheLi
 				setPrincipalName(in.readUTF());
 			}
 
-			sessionAttributes.from(this.<GemFireSessionAttributes>readObject(in));
+			sessionAttributes.from(this.<GemfireSessionAttributes>readObject(in));
 
 			this.delta = false;
 		}
@@ -607,9 +607,9 @@ public abstract class AbstractGemFireOperationsSessionRepository extends CacheLi
 	}
 
 	/**
-	 * The GemFireSessionAttributes class is a container for Session attributes that implements both
+	 * The GemfireSessionAttributes class is a container for Session attributes that implements both
 	 * the {@link DataSerializable} and {@link Delta} GemFire interfaces for efficient storage and distribution
-	 * (replication) in GemFire.  Additionally, GemFireSessionAttributes extends {@link AbstractMap} providing
+	 * (replication) in GemFire.  Additionally, GemfireSessionAttributes extends {@link AbstractMap} providing
 	 * {@link Map}-like behavior since attributes of a Session are effectively a name to value mapping.
 	 *
 	 * @see java.util.AbstractMap
@@ -619,15 +619,15 @@ public abstract class AbstractGemFireOperationsSessionRepository extends CacheLi
 	 * @see com.gemstone.gemfire.Instantiator
 	 */
 	@SuppressWarnings("serial")
-	public static class GemFireSessionAttributes extends AbstractMap<String, Object>
+	public static class GemfireSessionAttributes extends AbstractMap<String, Object>
 			implements DataSerializable, Delta {
 
 		protected static final boolean DEFAULT_ALLOW_JAVA_SERIALIZATION = true;
 
 		static {
-			Instantiator.register(new Instantiator(GemFireSessionAttributes.class, 800828008) {
+			Instantiator.register(new Instantiator(GemfireSessionAttributes.class, 800828008) {
 				@Override public DataSerializable newInstance() {
-					return new GemFireSessionAttributes();
+					return new GemfireSessionAttributes();
 				}
 			});
 		}
@@ -638,12 +638,12 @@ public abstract class AbstractGemFireOperationsSessionRepository extends CacheLi
 		private transient final Object lock;
 
 		/* (non-Javadoc) */
-		protected GemFireSessionAttributes() {
+		protected GemfireSessionAttributes() {
 			this.lock = this;
 		}
 
 		/* (non-Javadoc) */
-		protected GemFireSessionAttributes(Object lock) {
+		protected GemfireSessionAttributes(Object lock) {
 			this.lock = (lock != null ? lock : this);
 		}
 
@@ -715,7 +715,7 @@ public abstract class AbstractGemFireOperationsSessionRepository extends CacheLi
 		}
 
 		/* (non-Javadoc) */
-		public void from(GemFireSessionAttributes sessionAttributes) {
+		public void from(GemfireSessionAttributes sessionAttributes) {
 			synchronized (lock) {
 				for (String attributeName : sessionAttributes.getAttributeNames()) {
 					setAttribute(attributeName, sessionAttributes.getAttribute(attributeName));

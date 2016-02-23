@@ -30,8 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.CacheFactoryBean;
 import org.springframework.session.ExpiringSession;
-import org.springframework.session.data.gemfire.AbstractGemFireIntegrationTests;
-import org.springframework.session.data.gemfire.support.GemFireUtils;
+import org.springframework.session.data.gemfire.AbstractGemfireIntegrationTests;
+import org.springframework.session.data.gemfire.support.GemfireUtils;
 import org.springframework.session.events.AbstractSessionEvent;
 import org.springframework.session.events.SessionCreatedEvent;
 import org.springframework.session.events.SessionDeletedEvent;
@@ -46,15 +46,15 @@ import com.gemstone.gemfire.cache.Region;
 import com.gemstone.gemfire.cache.RegionShortcut;
 
 /**
- * The EnableGemFireHttpSessionEventsIntegrationTests class is a test suite of test cases testing the Session Event
- * functionality and behavior of the GemFireOperationsSessionRepository and GemFire's configuration.
+ * The EnableGemfireHttpSessionEventsIntegrationTests class is a test suite of test cases testing the Session Event
+ * functionality and behavior of the GemfireOperationsSessionRepository and GemFire's configuration.
  *
  * @author John Blum
  * @see org.junit.Test
  * @see org.junit.runner.RunWith
  * @see org.springframework.session.ExpiringSession
- * @see org.springframework.session.data.gemfire.AbstractGemFireIntegrationTests
- * @see org.springframework.session.data.gemfire.GemFireOperationsSessionRepository
+ * @see org.springframework.session.data.gemfire.AbstractGemfireIntegrationTests
+ * @see org.springframework.session.data.gemfire.GemfireOperationsSessionRepository
  * @see org.springframework.session.events.SessionCreatedEvent
  * @see org.springframework.session.events.SessionDeletedEvent
  * @see org.springframework.session.events.SessionExpiredEvent
@@ -67,7 +67,7 @@ import com.gemstone.gemfire.cache.RegionShortcut;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @WebAppConfiguration
-public class EnableGemFireHttpSessionEventsIntegrationTests extends AbstractGemFireIntegrationTests {
+public class EnableGemfireHttpSessionEventsIntegrationTests extends AbstractGemfireIntegrationTests {
 
 	private static final int MAX_INACTIVE_INTERVAL_IN_SECONDS = 1;
 
@@ -79,7 +79,7 @@ public class EnableGemFireHttpSessionEventsIntegrationTests extends AbstractGemF
 
 	@Before
 	public void setup() {
-		assertThat(GemFireUtils.isPeer(gemfireCache)).isTrue();
+		assertThat(GemfireUtils.isPeer(gemfireCache)).isTrue();
 		assertThat(gemfireSessionRepository).isNotNull();
 		assertThat(gemfireSessionRepository.getMaxInactiveIntervalInSeconds()).isEqualTo(
 			MAX_INACTIVE_INTERVAL_IN_SECONDS);
@@ -216,16 +216,16 @@ public class EnableGemFireHttpSessionEventsIntegrationTests extends AbstractGemF
 		assertThat(sessionEvent.getSessionId()).isEqualTo(expectedSessionId);
 	}
 
-	@EnableGemFireHttpSession(regionName = SPRING_SESSION_GEMFIRE_REGION_NAME,
+	@EnableGemfireHttpSession(regionName = SPRING_SESSION_GEMFIRE_REGION_NAME,
 		maxInactiveIntervalInSeconds = MAX_INACTIVE_INTERVAL_IN_SECONDS,
 			serverRegionShortcut = RegionShortcut.REPLICATE)
-	static class SpringSessionGemFireConfiguration {
+	static class SpringSessionGemfireConfiguration {
 
 		@Bean
 		Properties gemfireProperties() {
 			Properties gemfireProperties = new Properties();
 
-			gemfireProperties.setProperty("name", EnableGemFireHttpSessionEventsIntegrationTests.class.getName());
+			gemfireProperties.setProperty("name", EnableGemfireHttpSessionEventsIntegrationTests.class.getName());
 			gemfireProperties.setProperty("mcast-port", "0");
 			gemfireProperties.setProperty("log-level", GEMFIRE_LOG_LEVEL);
 

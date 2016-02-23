@@ -774,9 +774,9 @@ redis 127.0.0.1:6379> hget spring:session:sessions:4fc39ce3-63b3-4e17-b1c4-5e1ed
 ----
 
 [[api-gemfireoperationssessionrepository]]
-=== GemFireOperationsSessionRepository
+=== GemfireOperationsSessionRepository
 
-`GemFireOperationsSessionRepository` is a `SessionRepository` that is implemented using Spring Data's `GemFireOperationsSessionRepository`.
+`GemfireOperationsSessionRepository` is a `SessionRepository` that is implemented using Spring Data's `GemfireOperationsSessionRepository`.
 In a web environment, this is typically used in combination with `SessionRepositoryFilter`.
 The implementation supports `SessionDestroyedEvent` and `SessionCreatedEvent` through `SessionMessageListener`.
 
@@ -793,8 +793,8 @@ strategies for finding the principal name. The first strategy is that the value 
 
 [source,java,indent=0]
 ----
-include::{docs-itest-dir}docs/http/HttpSessionGemFireIndexingITests.java[tags=findbyindexname-set]
-include::{docs-itest-dir}docs/http/HttpSessionGemFireIndexingITests.java[tags=findbyindexname-get]
+include::{docs-itest-dir}docs/http/HttpSessionGemfireIndexingITests.java[tags=findbyindexname-set]
+include::{docs-itest-dir}docs/http/HttpSessionGemfireIndexingITests.java[tags=findbyindexname-get]
 ----
 
 [[api-gemfireoperationssessionrepository-indexing-security]]
@@ -806,21 +806,21 @@ find the current user's sessions using:
 
 [source,java,indent=0]
 ----
-include::{docs-itest-dir}docs/http/HttpSessionGemFireIndexingITests.java[tags=findbyspringsecurityindexname-context]
-include::{docs-itest-dir}docs/http/HttpSessionGemFireIndexingITests.java[tags=findbyspringsecurityindexname-get]
+include::{docs-itest-dir}docs/http/HttpSessionGemfireIndexingITests.java[tags=findbyspringsecurityindexname-context]
+include::{docs-itest-dir}docs/http/HttpSessionGemfireIndexingITests.java[tags=findbyspringsecurityindexname-get]
 ----
 
 [[api-gemfireoperationssessionrepository-indexing-custom]]
 ==== Using Custom Indexes with GemFire
 
-This enables developers using the `GemFireOperationsSessionRepository` programmatically to query and find all Sessions
+This enables developers using the `GemfireOperationsSessionRepository` programmatically to query and find all Sessions
 with a given principal name efficiently.
 
 Additionally, Spring Session Data GemFire will create a Range-based Index on the implementing Session's Map-type
 `attributes` property (i.e. on any arbitrary Session attribute) when a developer identifies 1 or more named Session
 attributes that should be indexed by GemFire.
 
-Sessions attributes to index can be specified with the `indexableSessionAttributes` attribute on the `@EnableGemFireHttpSession`
+Sessions attributes to index can be specified with the `indexableSessionAttributes` attribute on the `@EnableGemfireHttpSession`
 annotation.  A developer adds this annotation to their Spring application `@Configuration` class when s/he wishes to
 enable Spring Session support for HttpSession backed by GemFire.
 
@@ -828,7 +828,7 @@ For example, the following configuration:
 
 [source,java,indent=0]
 ----
-include::{docs-itest-dir}docs/http/gemfire/indexablesessionattributes/GemFireHttpSessionConfig.java[tags=class-start]
+include::{docs-itest-dir}docs/http/gemfire/indexablesessionattributes/GemfireHttpSessionConfig.java[tags=class-start]
 	// ...
 }
 ----
@@ -837,11 +837,11 @@ will allow searching for sessions using the following:
 
 [source,java,indent=0]
 ----
-include::{docs-itest-dir}docs/http/gemfire/indexablesessionattributes/HttpSessionGemFireIndexingCustomITests.java[tags=findbyindexname-set]
-include::{docs-itest-dir}docs/http/gemfire/indexablesessionattributes/HttpSessionGemFireIndexingCustomITests.java[tags=findbyindexname-get]
+include::{docs-itest-dir}docs/http/gemfire/indexablesessionattributes/HttpSessionGemfireIndexingCustomITests.java[tags=findbyindexname-set]
+include::{docs-itest-dir}docs/http/gemfire/indexablesessionattributes/HttpSessionGemfireIndexingCustomITests.java[tags=findbyindexname-get]
 ----
 
-NOTE: Only Session attribute names identified in the `@EnableGemFireHttpSession` annotation's `indexableSessionAttributes`
+NOTE: Only Session attribute names identified in the `@EnableGemfireHttpSession` annotation's `indexableSessionAttributes`
 attribute will have an Index defined.  All other Session attributes will not be indexed.
 
 However, there is one caveat. Any values stored in indexable Session attributes must implement the `java.lang.Comparable<T>`

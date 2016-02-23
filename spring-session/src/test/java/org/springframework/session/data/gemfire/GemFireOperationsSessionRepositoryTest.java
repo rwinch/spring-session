@@ -28,9 +28,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME;
-import static org.springframework.session.data.gemfire.GemFireOperationsSessionRepository.FIND_SESSIONS_BY_INDEX_NAME_VALUE_QUERY;
-import static org.springframework.session.data.gemfire.GemFireOperationsSessionRepository.FIND_SESSIONS_BY_PRINCIPAL_NAME_QUERY;
-import static org.springframework.session.data.gemfire.GemFireOperationsSessionRepository.GemFireSession;
+import static org.springframework.session.data.gemfire.GemfireOperationsSessionRepository.FIND_SESSIONS_BY_INDEX_NAME_VALUE_QUERY;
+import static org.springframework.session.data.gemfire.GemfireOperationsSessionRepository.FIND_SESSIONS_BY_PRINCIPAL_NAME_QUERY;
+import static org.springframework.session.data.gemfire.GemfireOperationsSessionRepository.GemfireSession;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -58,8 +58,8 @@ import com.gemstone.gemfire.cache.Region;
 import com.gemstone.gemfire.cache.query.SelectResults;
 
 /**
- * The GemFireOperationsSessionRepositoryTest class is a test suite of test cases testing the contract and functionality
- * of the GemFireOperationsSessionRepository class.
+ * The GemfireOperationsSessionRepositoryTest class is a test suite of test cases testing the contract and functionality
+ * of the GemfireOperationsSessionRepository class.
  *
  * @author John Blum
  * @see org.junit.Test
@@ -67,12 +67,12 @@ import com.gemstone.gemfire.cache.query.SelectResults;
  * @see org.mockito.Mock
  * @see org.mockito.Mockito
  * @see org.mockito.runners.MockitoJUnitRunner
- * @see org.springframework.session.data.gemfire.GemFireOperationsSessionRepository
+ * @see org.springframework.session.data.gemfire.GemfireOperationsSessionRepository
  * @see com.gemstone.gemfire.cache.Region
  * @since 1.1.0
  */
 @RunWith(MockitoJUnitRunner.class)
-public class GemFireOperationsSessionRepositoryTest {
+public class GemfireOperationsSessionRepositoryTest {
 
 	protected static final int MAX_INACTIVE_INTERVAL_IN_SECONDS = 600;
 
@@ -88,7 +88,7 @@ public class GemFireOperationsSessionRepositoryTest {
 	@Mock
 	private GemfireOperationsAccessor mockTemplate;
 
-	private GemFireOperationsSessionRepository sessionRepository;
+	private GemfireOperationsSessionRepository sessionRepository;
 
 	@Before
 	public void setup() throws Exception {
@@ -96,7 +96,7 @@ public class GemFireOperationsSessionRepositoryTest {
 		when(mockRegion.getFullPath()).thenReturn("/Example");
 		when(mockTemplate.<Object, ExpiringSession>getRegion()).thenReturn(mockRegion);
 
-		sessionRepository = new GemFireOperationsSessionRepository(mockTemplate);
+		sessionRepository = new GemfireOperationsSessionRepository(mockTemplate);
 		sessionRepository.setApplicationEventPublisher(mockApplicationEventPublisher);
 		sessionRepository.setMaxInactiveIntervalInSeconds(MAX_INACTIVE_INTERVAL_IN_SECONDS);
 		sessionRepository.afterPropertiesSet();
@@ -230,7 +230,7 @@ public class GemFireOperationsSessionRepositoryTest {
 
 		ExpiringSession session = sessionRepository.createSession();
 
-		assertThat(session).isInstanceOf(GemFireSession.class);
+		assertThat(session).isInstanceOf(GemfireSession.class);
 		assertThat(session.getId()).isNotNull();
 		assertThat(session.getAttributeNames().isEmpty()).isTrue();
 		assertThat(session.getCreationTime()).isGreaterThanOrEqualTo(beforeOrAtCreationTime);
@@ -331,7 +331,7 @@ public class GemFireOperationsSessionRepositoryTest {
 		when(mockSession.getMaxInactiveIntervalInSeconds()).thenReturn(MAX_INACTIVE_INTERVAL_IN_SECONDS);
 		when(mockSession.getAttributeNames()).thenReturn(Collections.<String>emptySet());
 
-		when(mockTemplate.put(eq(expectedSessionId), isA(GemFireSession.class)))
+		when(mockTemplate.put(eq(expectedSessionId), isA(GemfireSession.class)))
 			.thenAnswer(new Answer<ExpiringSession>() {
 				public ExpiringSession answer(final InvocationOnMock invocation) throws Throwable {
 					ExpiringSession session = invocation.getArgumentAt(1, ExpiringSession.class);
@@ -354,7 +354,7 @@ public class GemFireOperationsSessionRepositoryTest {
 		verify(mockSession, times(1)).getLastAccessedTime();
 		verify(mockSession, times(1)).getMaxInactiveIntervalInSeconds();
 		verify(mockSession, times(1)).getAttributeNames();
-		verify(mockTemplate, times(1)).put(eq(expectedSessionId), isA(GemFireSession.class));
+		verify(mockTemplate, times(1)).put(eq(expectedSessionId), isA(GemfireSession.class));
 	}
 
 	@Test

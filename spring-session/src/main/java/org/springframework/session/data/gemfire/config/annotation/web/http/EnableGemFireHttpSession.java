@@ -40,8 +40,8 @@ import com.gemstone.gemfire.cache.client.ClientRegionShortcut;
  * <pre>
  * <code>
  * {@literal @Configuration}
- * {@literal @EnableGemFireHttpSession}
- * public class GemFirePeerCacheHttpSessionConfiguration {
+ * {@literal @EnableGemfireHttpSession}
+ * public class GemfirePeerCacheHttpSessionConfiguration {
  *
  *     {@literal @Bean}
  *     public Properties gemfireProperties() {
@@ -70,8 +70,8 @@ import com.gemstone.gemfire.cache.client.ClientRegionShortcut;
  *
  * <code>
  * {@literal @Configuration}
- * {@literal @EnableGemFireHttpSession}
- * public class GemFireClientCacheHttpSessionConfiguration {
+ * {@literal @EnableGemfireHttpSession}
+ * public class GemfireClientCacheHttpSessionConfiguration {
  *
  *     {@literal @Bean}
  *     public Properties gemfireProperties() {
@@ -92,12 +92,12 @@ import com.gemstone.gemfire.cache.client.ClientRegionShortcut;
  * }
  * </code>
  *
- * More advanced configurations can extend {@link GemFireHttpSessionConfiguration} instead.
+ * More advanced configurations can extend {@link GemfireHttpSessionConfiguration} instead.
  *
  * @author John Blum
  * @see org.springframework.context.annotation.Configuration
  * @see org.springframework.context.annotation.Import
- * @see org.springframework.session.data.gemfire.config.annotation.web.http.GemFireHttpSessionConfiguration
+ * @see org.springframework.session.data.gemfire.config.annotation.web.http.GemfireHttpSessionConfiguration
  * @see org.springframework.session.config.annotation.web.http.EnableSpringHttpSession
  * @since 1.1.0
  */
@@ -105,8 +105,8 @@ import com.gemstone.gemfire.cache.client.ClientRegionShortcut;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Configuration
-@Import(GemFireHttpSessionConfiguration.class)
-public @interface EnableGemFireHttpSession {
+@Import(GemfireHttpSessionConfiguration.class)
+public @interface EnableGemfireHttpSession {
 
 	/**
 	 * Defines the GemFire ClientCache Region DataPolicy.

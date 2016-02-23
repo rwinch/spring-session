@@ -24,11 +24,11 @@
 	<context:annotation-config/>
 
 	<!--4-->
-	<bean class="org.springframework.session.data.gemfire.config.annotation.web.http.GemFireHttpSessionConfiguration"
+	<bean class="org.springframework.session.data.gemfire.config.annotation.web.http.GemfireHttpSessionConfiguration"
           p:maxInactiveIntervalInSeconds="30"/>
 
 	<!--5-->
-	<bean class="sample.GemFireCacheServerReadyBeanPostProcessor"/>
+	<bean class="sample.GemfireCacheServerReadyBeanPostProcessor"/>
 
 	<!--6-->
 	<util:properties id="gemfireProperties">

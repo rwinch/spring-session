@@ -31,7 +31,7 @@ import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.session.ExpiringSession;
-import org.springframework.session.data.gemfire.support.GemFireUtils;
+import org.springframework.session.data.gemfire.support.GemfireUtils;
 import org.springframework.session.events.AbstractSessionEvent;
 
 import com.gemstone.gemfire.cache.Cache;
@@ -47,7 +47,7 @@ import com.gemstone.gemfire.cache.query.Index;
 import com.gemstone.gemfire.cache.server.CacheServer;
 
 /**
- * AbstractGemFireIntegrationTests is an abstract base class encapsulating common operations for writing
+ * AbstractGemfireIntegrationTests is an abstract base class encapsulating common operations for writing
  * Spring Session GemFire integration tests.
  *
  * @author John Blum
@@ -62,7 +62,7 @@ import com.gemstone.gemfire.cache.server.CacheServer;
  * @see com.gemstone.gemfire.cache.server.CacheServer
  * @since 1.1.0
  */
-public class AbstractGemFireIntegrationTests {
+public class AbstractGemfireIntegrationTests {
 
 	protected static final boolean DEFAULT_ENABLE_QUERY_DEBUGGING = false;
 	protected static final boolean GEMFIRE_QUERY_DEBUG = Boolean.getBoolean("spring.session.data.gemfire.query.debug");
@@ -86,7 +86,7 @@ public class AbstractGemFireIntegrationTests {
 	protected Cache gemfireCache;
 
 	@Autowired
-	protected GemFireOperationsSessionRepository gemfireSessionRepository;
+	protected GemfireOperationsSessionRepository gemfireSessionRepository;
 
 	@Before
 	public void setup() {
@@ -195,7 +195,7 @@ public class AbstractGemFireIntegrationTests {
 				catch (IOException ignore) {
 				}
 				finally {
-					GemFireUtils.close(socket);
+					GemfireUtils.close(socket);
 				}
 
 				return connected.get();
@@ -314,7 +314,7 @@ public class AbstractGemFireIntegrationTests {
 	protected void assertRegion(Region<?, ?> actualRegion, String expectedName, DataPolicy expectedDataPolicy) {
 		assertThat(actualRegion).isNotNull();
 		assertThat(actualRegion.getName()).isEqualTo(expectedName);
-		assertThat(actualRegion.getFullPath()).isEqualTo(GemFireUtils.toRegionPath(expectedName));
+		assertThat(actualRegion.getFullPath()).isEqualTo(GemfireUtils.toRegionPath(expectedName));
 		assertThat(actualRegion.getAttributes()).isNotNull();
 		assertThat(actualRegion.getAttributes().getDataPolicy()).isEqualTo(expectedDataPolicy);
 	}
@@ -350,8 +350,8 @@ public class AbstractGemFireIntegrationTests {
 	}
 
 	/* (non-Javadoc) */
-	protected List<String> listRegions(GemFireCache gemfireCache) {
-		Set<Region<?, ?>> regions = gemfireCache.rootRegions();
+	protected List<String> listRegions(GemFireCache gemFireCache) {
+		Set<Region<?, ?>> regions = gemFireCache.rootRegions();
 
 		List<String> regionList = new ArrayList<String>(regions.size());
 
@@ -373,7 +373,7 @@ public class AbstractGemFireIntegrationTests {
 	/* (non-Javadoc) */
 	@SuppressWarnings("unchecked")
 	protected <T extends ExpiringSession> T createSession(String principalName) {
-		GemFireOperationsSessionRepository.GemFireSession session = createSession();
+		GemfireOperationsSessionRepository.GemfireSession session = createSession();
 		session.setPrincipalName(principalName);
 		return (T) session;
 	}

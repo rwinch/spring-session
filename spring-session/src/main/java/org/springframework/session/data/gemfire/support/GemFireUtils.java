@@ -28,13 +28,13 @@ import com.gemstone.gemfire.cache.client.ClientRegionShortcut;
 import com.gemstone.gemfire.internal.cache.GemFireCacheImpl;
 
 /**
- * GemFireUtils is an abstract, extensible utility class for working with GemFire types and functionality
+ * GemfireUtils is an abstract, extensible utility class for working with GemFire types and functionality
  * and is used by Spring Session's GemFire adapter support classes.
  *
  * @author John Blum
  * @since 1.1.0
  */
-public abstract class GemFireUtils {
+public abstract class GemfireUtils {
 
 	/**
 	 * Null-safe method to close the given {@link Closeable} object.

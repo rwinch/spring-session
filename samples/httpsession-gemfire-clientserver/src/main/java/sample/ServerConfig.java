@@ -24,12 +24,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.gemfire.CacheFactoryBean;
 import org.springframework.data.gemfire.server.CacheServerFactoryBean;
-import org.springframework.session.data.gemfire.config.annotation.web.http.EnableGemFireHttpSession;
+import org.springframework.session.data.gemfire.config.annotation.web.http.EnableGemfireHttpSession;
 
 import com.gemstone.gemfire.cache.Cache;
 
 // tag::class[]
-@EnableGemFireHttpSession(maxInactiveIntervalInSeconds = 30)// <1>
+@EnableGemfireHttpSession(maxInactiveIntervalInSeconds = 30)// <1>
 public class ServerConfig {
 
 	static final int MAX_CONNECTIONS = 50;
@@ -46,7 +46,7 @@ public class ServerConfig {
 	Properties gemfireProperties() { // <2>
 		Properties gemfireProperties = new Properties();
 
-		gemfireProperties.setProperty("name", "GemFireClientServerHttpSessionSample");
+		gemfireProperties.setProperty("name", "GemfireClientServerHttpSessionSample");
 		gemfireProperties.setProperty("mcast-port", "0");
 		gemfireProperties.setProperty("log-level",
 			System.getProperty("sample.httpsession.gemfire.log-level", "warning"));

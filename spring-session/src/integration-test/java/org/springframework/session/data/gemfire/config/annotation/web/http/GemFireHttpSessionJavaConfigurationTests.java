@@ -26,8 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.gemfire.CacheFactoryBean;
 import org.springframework.session.ExpiringSession;
-import org.springframework.session.data.gemfire.AbstractGemFireIntegrationTests;
-import org.springframework.session.data.gemfire.support.GemFireUtils;
+import org.springframework.session.data.gemfire.AbstractGemfireIntegrationTests;
+import org.springframework.session.data.gemfire.support.GemfireUtils;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -42,7 +42,7 @@ import com.gemstone.gemfire.cache.query.Index;
 import com.gemstone.gemfire.cache.query.QueryService;
 
 /**
- * The GemFireHttpSessionJavaConfigurationTests class...
+ * The GemfireHttpSessionJavaConfigurationTests class...
  *
  * @author John Blum
  * @since 1.0.0
@@ -51,13 +51,13 @@ import com.gemstone.gemfire.cache.query.QueryService;
 @ContextConfiguration
 @DirtiesContext
 @WebAppConfiguration
-public class GemFireHttpSessionJavaConfigurationTests extends AbstractGemFireIntegrationTests {
+public class GemfireHttpSessionJavaConfigurationTests extends AbstractGemfireIntegrationTests {
 
 	@Autowired
 	private Cache gemfireCache;
 
 	protected <K, V> Region<K, V> assertCacheAndRegion(Cache gemfireCache, String regionName, DataPolicy dataPolicy) {
-		assertThat(GemFireUtils.isPeer(gemfireCache)).isTrue();
+		assertThat(GemfireUtils.isPeer(gemfireCache)).isTrue();
 
 		Region<K, V> region = gemfireCache.getRegion(regionName);
 
@@ -75,7 +75,7 @@ public class GemFireHttpSessionJavaConfigurationTests extends AbstractGemFireInt
 	}
 
 	@Test
-	public void verifyGemFireExampleCacheRegionPrincipalNameIndexWasCreatedSuccessfully() {
+	public void verifyGemfireExampleCacheRegionPrincipalNameIndexWasCreatedSuccessfully() {
 		Region<Object, ExpiringSession> example = assertCacheAndRegion(gemfireCache, "Example",
 			DataPolicy.REPLICATE);
 
@@ -89,7 +89,7 @@ public class GemFireHttpSessionJavaConfigurationTests extends AbstractGemFireInt
 	}
 
 	@Test
-	public void verifyGemFireExampleCacheRegionSessionAttributesIndexWasNotCreated() {
+	public void verifyGemfireExampleCacheRegionSessionAttributesIndexWasNotCreated() {
 		Region<Object, ExpiringSession> example = assertCacheAndRegion(gemfireCache, "Example",
 			DataPolicy.REPLICATE);
 
@@ -102,14 +102,14 @@ public class GemFireHttpSessionJavaConfigurationTests extends AbstractGemFireInt
 		assertThat(sessionAttributesIndex).isNull();
 	}
 
-	@EnableGemFireHttpSession(indexableSessionAttributes = {}, maxInactiveIntervalInSeconds = 900,
+	@EnableGemfireHttpSession(indexableSessionAttributes = {}, maxInactiveIntervalInSeconds = 900,
 		regionName = "Example", serverRegionShortcut = RegionShortcut.REPLICATE)
-	public static class GemFireConfiguration {
+	public static class GemfireConfiguration {
 
 		@Bean
 		Properties gemfireProperties() {
 			Properties gemfireProperties = new Properties();
-			gemfireProperties.setProperty("name", GemFireHttpSessionJavaConfigurationTests.class.getName());
+			gemfireProperties.setProperty("name", GemfireHttpSessionJavaConfigurationTests.class.getName());
 			gemfireProperties.setProperty("mcast-port", "0");
 			gemfireProperties.setProperty("log-level", "warning");
 			return gemfireProperties;

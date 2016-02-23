@@ -90,7 +90,7 @@ placeholders in the Spring XML configuration meta-data with property values.
 <3> Spring annotation configuration support is enabled with `<context:annotation-config/>` element so that any
 Spring beans declared in the XML config that are annotated with either Spring or Standard Java annotations supported
 by Spring will be configured appropriately.
-<4> `GemFireHttpSessionConfiguration` is registered to enable Spring Session functionality.
+<4> `GemfireHttpSessionConfiguration` is registered to enable Spring Session functionality.
 <5> Then, a Spring `BeanPostProcessor` is registered to determine whether a GemFire Server at the designated host/port
 is running, blocking client startup until the server is available.
 <6> Next, we include a `Properties` bean to configure certain aspects of the GemFire client cache using
@@ -125,7 +125,7 @@ Spring beans declared in the XML config that are annotated with either Spring or
 by Spring will be configured appropriately.
 <2> A `PropertySourcesPlaceholderConfigurer` is registered to replace placeholders in our Spring XML configuration
 meta-data with property values from `META-INF/spring/application.properties`.
-<3> We enable the same Spring Session functionality that we used on the client by registering an instance of `GemFireHttpSessionConfiguration`,
+<3> We enable the same Spring Session functionality that we used on the client by registering an instance of `GemfireHttpSessionConfiguration`,
 except that we set the session expiration timeout to **30 seconds**. We will explain later what this means.
 <4> Next, we configure the GemFire Server using GemFire System properties very much like our P2P samples.
 With the `mcast-port` set to 0 and no `locators` property specified, our server will be standalone. We also allow a
