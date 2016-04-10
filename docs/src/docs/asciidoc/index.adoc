@@ -128,6 +128,10 @@ If you are looking to get started with Spring Session, the best place to start i
 | Demonstrates how to use Spring Session to replace the `HttpSession` with a relational database store when using Spring Boot.
 | link:guides/httpsession-jdbc-boot.html[HttpSession JDBC Spring Boot Guide]
 
+| {gh-samples-url}couchbase[Couchbase]
+| Demonstrates how to use Spring Session with Couchbase.
+| link:guides/couchbase.html[Couchbase Guide]
+
 |===
 
 [[httpsession]]

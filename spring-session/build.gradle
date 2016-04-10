@@ -25,15 +25,23 @@ dependencies {
 			"org.springframework:spring-web:$springVersion",
 			"org.springframework:spring-messaging:$springVersion",
 			"org.springframework:spring-websocket:$springVersion",
-			"org.springframework.security:spring-security-core:$springSecurityVersion"
+			"org.springframework.security:spring-security-core:$springSecurityVersion",
+			"com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",
+			"org.apache.commons:commons-lang3:$commonsLangVersion",
+			"org.springframework.data:spring-data-couchbase:$springDataCouchbaseVersion"
+
 	provided "javax.servlet:javax.servlet-api:$servletApiVersion"
+
 	integrationTestCompile "redis.clients:jedis:$jedisVersion",
 			"org.apache.commons:commons-pool2:2.2",
 			"com.hazelcast:hazelcast-client:$hazelcastVersion",
 			"com.h2database:h2:$h2Version",
 			"org.hsqldb:hsqldb:2.3.3",
 			"org.apache.derby:derby:10.12.1.1",
-			"de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.50.2"
+			"de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.50.2",
+			"org.spockframework:spock-spring:$spockVersion",
+			"org.springframework.boot:spring-boot-starter-web:$springBootVersion",
+			"org.springframework.boot:spring-boot-starter-test:$springBootVersion"
 
 	integrationTestRuntime "org.springframework.shell:spring-shell:1.0.0.RELEASE"
 
