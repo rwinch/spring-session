@@ -19,6 +19,8 @@ ext {
     assertjVersion = "2.4.0"
 }
 
+ext['spring-security.version'] = '4.2.0.BUILD-SNAPSHOT'
+
 dependencies {
     compile project(':spring-session'),
             "org.springframework.boot:spring-boot-starter-redis",
