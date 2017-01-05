@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2016 the original author or authors.
+ * Copyright 2014-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,16 @@
 package sample.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.session.data.mongo.JdkMongoSessionConverter;
-import org.springframework.session.data.mongo.config.annotation.web.http.EnableMongoHttpSession;
 
 // tag::class[]
-@EnableMongoHttpSession // <1>
-public class HttpSessionConfig {
+@Configuration
+public class SessionConfig {
 
 	@Bean
 	public JdkMongoSessionConverter jdkMongoSessionConverter() {
-		return new JdkMongoSessionConverter(); // <2>
+		return new JdkMongoSessionConverter(); // <1>
 	}
 }
 // end::class[]

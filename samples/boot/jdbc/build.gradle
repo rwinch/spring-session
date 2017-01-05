@@ -17,10 +17,10 @@ group = 'samples'
 
 dependencies {
 	compile project(':spring-session-jdbc'),
-			"org.springframework.boot:spring-boot-starter-jdbc",
 			"org.springframework.boot:spring-boot-starter-web",
-			"org.springframework.boot:spring-boot-starter-security",
 			"org.springframework.boot:spring-boot-starter-thymeleaf",
+			"org.springframework.boot:spring-boot-starter-security",
+			"org.springframework.boot:spring-boot-devtools",
 			"nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect",
 			"org.webjars:bootstrap:$bootstrapVersion",
 			"org.webjars:html5shiv:$html5ShivVersion",
@@ -31,16 +31,12 @@ dependencies {
 			"org.assertj:assertj-core:$assertjVersion"
 
 	integrationTestCompile seleniumDependencies
-
 }
 
 integrationTest {
 	doFirst {
 		def port = reservePort()
 
-		def host = 'localhost:' + port
-		systemProperties['geb.build.baseUrl'] = 'http://'+host+'/'
-		systemProperties['geb.build.reportsDir'] = 'build/geb-reports'
 		systemProperties['server.port'] = port
 		systemProperties['management.port'] = 0
 

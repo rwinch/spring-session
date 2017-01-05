@@ -15,13 +15,12 @@ apply from: SAMPLE_GRADLE
 
 group = 'samples'
 
-ext['spring-data-releasetrain.version'] = springDataReleaseTrainVersion
-
 dependencies {
 	compile project(':spring-session-data-redis'),
-			"org.springframework.boot:spring-boot-starter-security",
-			"org.springframework.boot:spring-boot-starter-thymeleaf",
 			"org.springframework.boot:spring-boot-starter-web",
+			"org.springframework.boot:spring-boot-starter-thymeleaf",
+			"org.springframework.boot:spring-boot-starter-security",
+			"org.springframework.boot:spring-boot-devtools",
 			"nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect",
 			"org.webjars:bootstrap:$bootstrapVersion",
 			"org.webjars:html5shiv:$html5ShivVersion",
@@ -30,10 +29,9 @@ dependencies {
 			"org.apache.httpcomponents:httpclient"
 
 	testCompile "org.springframework.boot:spring-boot-starter-test",
-				"org.assertj:assertj-core:$assertjVersion"
+			"org.assertj:assertj-core:$assertjVersion"
 
 	integrationTestCompile seleniumDependencies
-
 }
 
 integrationTest {

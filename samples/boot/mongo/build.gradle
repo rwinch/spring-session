@@ -16,11 +16,11 @@ apply from: SAMPLE_GRADLE
 group = 'samples'
 
 dependencies {
-	compile project(':spring-session'),
-			"org.springframework.data:spring-data-mongodb:$springDataMongoDBVersion",
+	compile project(':spring-session-data-mongo'),
 			"org.springframework.boot:spring-boot-starter-web",
-			"org.springframework.boot:spring-boot-starter-security",
 			"org.springframework.boot:spring-boot-starter-thymeleaf",
+			"org.springframework.boot:spring-boot-starter-security",
+			"org.springframework.boot:spring-boot-devtools",
 			"nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect",
 			"org.webjars:bootstrap:$bootstrapVersion",
 			"org.webjars:html5shiv:$html5ShivVersion",
@@ -30,7 +30,6 @@ dependencies {
 	testCompile "org.springframework.boot:spring-boot-starter-test"
 
 	integrationTestCompile seleniumDependencies
-
 }
 
 integrationTest {

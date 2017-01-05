@@ -1,8 +1,8 @@
 = Spring Session - Mongo Repositories
-Jakub Kubrynski
+Jakub Kubrynski, Vedran Pavić
 :toc:
 
-This guide describes how to use Spring Session backed by Mongo.
+This guide describes how to use Spring Session to transparently leverage Mongo to back a web application's `HttpSession` when using Spring Boot.
 
 NOTE: The completed guide can be found in the <<mongo-sample, mongo sample application>>.
 
@@ -20,68 +20,47 @@ If you are using Maven, ensure to add the following dependencies:
 
 	<dependency>
 		<groupId>org.springframework.session</groupId>
-		<artifactId>spring-session</artifactId>
-		<version>{spring-session-version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		<artifactId>spring-session-data-mongo</artifactId>
 	</dependency>
 </dependencies>
 ----
 
-ifeval::["{version-snapshot}" == "true"]
-Since We are using a SNAPSHOT version, we need to ensure to add the Spring Snapshot Maven Repository.
-Ensure you have the following in your pom.xml:
-
-.pom.xml
-[source,xml]
-----
-<repositories>
-
-	<!-- ... -->
-
-	<repository>
-		<id>spring-snapshot</id>
-		<url>https://repo.spring.io/libs-snapshot</url>
-	</repository>
-</repositories>
-----
-endif::[]
-
-ifeval::["{version-milestone}" == "true"]
-Since We are using a Milestone version, we need to ensure to add the Spring Milestone Maven Repository.
-Ensure you have the following in your pom.xml:
-
-.pom.xml
-[source,xml]
-----
-<repository>
-	<id>spring-milestone</id>
-	<url>https://repo.spring.io/libs-milestone</url>
-</repository>
-----
-endif::[]
+Spring Boot provides dependency management for Spring Session modules, so there's no need to explicitly declare dependency version.
 
 [[mongo-spring-configuration]]
-== Spring Configuration
-
-After adding the required dependencies, we can create our Spring configuration.
-The Spring configuration is responsible for creating a Servlet Filter that replaces the `HttpSession` implementation with an implementation backed by Spring Session.
+== Spring Boot Configuration
 
 // tag::config[]
-All you have to do is to add the following Spring Configuration:
+After adding the required dependencies, we can create our Spring Boot configuration.
+Thanks to first-class auto configuration support, setting up Spring Session backed by Mongo is as simple as adding a single configuration property to your `application.properties`:
+
+.src/main/resources/application.properties
+----
+spring.session.store-type=mongo
+----
+
+Under the hood, Spring Boot will apply configuration that is equivalent to manually adding `@EnableMongoHttpSession` annotation.
+This creates a Spring Bean with the name of `springSessionRepositoryFilter` that implements Filter.
+The filter is what is in charge of replacing the `HttpSession` implementation to be backed by Spring Session.
+
+In addition to that, you have to add the following Spring Configuration:
 
 [source,java]
 ----
-include::{samples-dir}boot/mongo/src/main/java/sample/config/HttpSessionConfig.java[tags=class]
+include::{samples-dir}boot/mongo/src/main/java/sample/config/SessionConfig.java[tags=class]
 ----
 
-<1> The `@EnableMongoHttpSession` annotation creates a Spring Bean with the name of `springSessionRepositoryFilter` that implements Filter.
-The filter is what is in charge of replacing the `HttpSession` implementation to be backed by Spring Session.
-In this instance Spring Session is backed by Mongo.
+<1> We explicitly configure `JdkMongoSessionConverter` since Spring Security's objects cannot be automatically persisted using Jackson (the default if Jackson is on the classpath).
 
-<2> We explicitly configure `JdkMongoSessionConverter` since Spring Security's objects cannot be automatically persisted using Jackson (the default if Jackson is on the classpath).
+Further customization is possible using `application.properties`:
+
+.src/main/resources/application.properties
+----
+server.session.timeout= # Session timeout in seconds.
+spring.session.mongo.collection-name=sessions # Collection name used to store sessions.
+----
+
+For more information, refer to http://docs.spring.io/spring-boot/docs/{spring-boot-version}/reference/htmlsingle/#boot-features-session[Spring Session] portion of the Spring Boot documentation.
 
 // end::config[]
 
@@ -99,12 +78,12 @@ spring.data.mongodb.port=27018
 spring.data.mongodb.database=prod
 ----
 
-For more information, refer to http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-connecting-to-mongodb[Connecting to MongoDB] portion of the Spring Boot documentation.
+For more information, refer to http://docs.spring.io/spring-boot/docs/{spring-boot-version}/reference/htmlsingle/#boot-features-connecting-to-mongodb[Connecting to MongoDB] portion of the Spring Boot documentation.
 
 [[boot-servlet-configuration]]
 == Servlet Container Initialization
 
-Our <<boot-spring-configuration,Spring Configuration>> created a Spring Bean named `springSessionRepositoryFilter` that implements `Filter`.
+Our <<boot-spring-configuration,Spring Boot Configuration>> created a Spring Bean named `springSessionRepositoryFilter` that implements `Filter`.
 The `springSessionRepositoryFilter` bean is responsible for replacing the `HttpSession` with a custom implementation that is backed by Spring Session.
 
 In order for our `Filter` to do its magic, Spring needs to load our `Config` class.

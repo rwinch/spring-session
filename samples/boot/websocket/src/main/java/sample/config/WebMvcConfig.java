@@ -16,16 +16,25 @@
 
 package sample.config;
 
-import org.springframework.context.annotation.Bean;
+import java.util.List;
+
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.security.web.method.annotation.CsrfTokenArgumentResolver;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
-public class DataSourceConfig {
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-	@Bean
-	public LettuceConnectionFactory connectionFactory() {
-		return new LettuceConnectionFactory();
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("index");
+	}
+
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+		argumentResolvers.add(new CsrfTokenArgumentResolver()); // DATACMNS-776
 	}
 
 }
