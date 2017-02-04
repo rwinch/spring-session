@@ -18,6 +18,8 @@ plugins {
 	id "io.spring.dependency-management" version "1.0.0.RC2"
 }
 
+subprojects.each { println it }
+
 group = 'org.springframework.session'
 
 ext.springBootVersion = '2.0.0.BUILD-SNAPSHOT'
