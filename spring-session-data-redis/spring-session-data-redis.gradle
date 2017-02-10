@@ -1,25 +1,13 @@
-apply from: JAVA_GRADLE
-apply from: MAVEN_GRADLE
-apply from: BOM_GRADLE
-
-apply plugin: 'spring-io'
+apply plugin: 'io.spring.convention.spring-pom'
 
 description = "Aggregator for Spring Session and Spring Data Redis"
 
-dependencyManagement {
-	springIoTestRuntime {
-		imports {
-			mavenBom "io.spring.platform:platform-bom:${springIoVersion}"
-		}
-	}
-}
-
 dependencies {
 	compile project(':spring-session')
-	compile ("org.springframework.data:spring-data-redis:$springDataRedisVersion") {
+	compile ("org.springframework.data:spring-data-redis") {
 		exclude group: "org.slf4j", module: 'slf4j-api'
 		exclude group: "org.slf4j", module: 'jcl-over-slf4j'
 	}
-    compile "redis.clients:jedis:$jedisVersion",
-			"org.apache.commons:commons-pool2:$commonsPoolVersion"
+	compile "redis.clients:jedis"
+	compile "org.apache.commons:commons-pool2"
 }

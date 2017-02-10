@@ -1,20 +1,6 @@
-apply from: JAVA_GRADLE
-apply from: MAVEN_GRADLE
-apply from: BOM_GRADLE
-
-apply plugin: 'spring-io'
-
-description = "Aggregator for Spring Session and Hazelcast"
+apply plugin: 'io.spring.convention.spring-pom'
 
 dependencies {
-	compile project(':spring-session'),
-			"com.hazelcast:hazelcast:$hazelcastVersion"
-}
-
-dependencyManagement {
-	springIoTestRuntime {
-		imports {
-			mavenBom "io.spring.platform:platform-bom:${springIoVersion}"
-		}
-	}
+	compile project(':spring-session')
+	compile "com.hazelcast:hazelcast"
 }

@@ -1,20 +1,18 @@
-apply from: JAVA_GRADLE
-apply from: TOMCAT_7_GRADLE
-apply from: SAMPLE_GRADLE
+apply plugin: 'io.spring.convention.spring-sample-war'
 
 dependencies {
-	compile project(':spring-session-data-gemfire'),
-		"org.springframework:spring-web:$springVersion",
-		"org.webjars:bootstrap:$bootstrapVersion",
-		"org.webjars:webjars-taglib:$webjarsTaglibVersion",
-		jstlDependencies
+	compile project(':spring-session-data-gemfire')
+	compile "org.springframework:spring-web"
+	compile "org.webjars:bootstrap"
+	compile "org.webjars:webjars-taglib"
+	compile jstlDependencies
 
-	providedCompile "javax.servlet:javax.servlet-api:$servletApiVersion"
+	providedCompile "javax.servlet:javax.servlet-api"
 
-	testCompile "junit:junit:$junitVersion"
+	testCompile "junit:junit"
 
-	integrationTestCompile seleniumDependencies,
-		"org.assertj:assertj-core:$assertjVersion"
+	integrationTestCompile seleniumDependencies
+	integrationTestCompile "org.assertj:assertj-core"
 
-	integrationTestRuntime "org.springframework.shell:spring-shell:1.1.0.RELEASE"
+	integrationTestRuntime "org.springframework.shell:spring-shell"
 }

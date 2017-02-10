@@ -1,25 +1,23 @@
-apply from: JAVA_GRADLE
-apply from: TOMCAT_7_GRADLE
-apply from: SAMPLE_GRADLE
+apply plugin: 'io.spring.convention.spring-sample-war'
 
 dependencies {
 	compile(project(':spring-session-data-redis')) {
 		exclude module: 'jedis'
 	}
-	compile "org.springframework:spring-web:$springVersion",
-			"org.springframework.security:spring-security-config:$springSecurityVersion",
-			"org.springframework.security:spring-security-web:$springSecurityVersion",
-			"biz.paluch.redis:lettuce:$lettuceVersion",
-			"org.webjars:bootstrap:$bootstrapVersion",
-			"org.webjars:webjars-taglib:$webjarsTaglibVersion",
-			jstlDependencies
+	compile "org.springframework:spring-web"
+	compile "org.springframework.security:spring-security-config"
+	compile "org.springframework.security:spring-security-web"
+	compile "biz.paluch.redis:lettuce"
+	compile "org.webjars:bootstrap"
+	compile "org.webjars:webjars-taglib"
+	compile jstlDependencies
 
-	providedCompile "javax.servlet:javax.servlet-api:$servletApiVersion",
-					"javax.servlet:jsp-api:$jspApiVersion"
+	providedCompile "javax.servlet:javax.servlet-api"
+	providedCompile "javax.servlet.jsp:javax.servlet.jsp-api"
 
-	testCompile	"junit:junit:$junitVersion",
-			"org.assertj:assertj-core:$assertjVersion",
-			"org.springframework:spring-test:$springVersion"
+	testCompile	"junit:junit"
+	testCompile "org.assertj:assertj-core"
+	testCompile "org.springframework:spring-test"
 
 	integrationTestCompile seleniumDependencies
 }

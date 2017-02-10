@@ -1,52 +1,17 @@
-buildscript {
-	repositories {
-		mavenCentral()
-		maven { url "https://repo.spring.io/plugins-snapshot" }
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
-	}
-}
-
-apply plugin: 'org.springframework.boot'
-
-apply from: JAVA_GRADLE
-apply from: SAMPLE_GRADLE
-
-group = 'samples'
-
-ext['spring-data-releasetrain.version'] = springDataReleaseTrainVersion
+apply plugin: 'io.spring.convention.spring-sample-boot'
 
 dependencies {
-	compile project(':spring-session-data-redis'),
-			"org.springframework.boot:spring-boot-starter-security",
-			"org.springframework.boot:spring-boot-starter-thymeleaf",
-			"org.springframework.boot:spring-boot-starter-web",
-			"nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect",
-			"org.webjars:bootstrap:$bootstrapVersion",
-			"org.webjars:html5shiv:$html5ShivVersion",
-			"org.webjars:webjars-locator"
+	compile project(':spring-session-data-redis')
+	compile"org.springframework.boot:spring-boot-starter-security"
+	compile"org.springframework.boot:spring-boot-starter-thymeleaf"
+	compile"org.springframework.boot:spring-boot-starter-web"
+	compile"nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect"
+	compile"org.webjars:bootstrap"
+	compile"org.webjars:html5shiv"
+	compile"org.webjars:webjars-locator"
 
 	testCompile "org.springframework.boot:spring-boot-starter-test"
 
 	integrationTestCompile seleniumDependencies
 
-}
-
-integrationTest {
-	doFirst {
-		def port = reservePort()
-
-		systemProperties['server.port'] = port
-		systemProperties['management.port'] = 0
-
-		systemProperties['spring.session.redis.namespace'] = project.name
-	}
-}
-
-def reservePort() {
-	def socket = new ServerSocket(0)
-	def result = socket.localPort
-	socket.close()
-	result
 }

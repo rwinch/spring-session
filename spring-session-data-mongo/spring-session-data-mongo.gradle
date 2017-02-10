@@ -1,20 +1,8 @@
-apply from: JAVA_GRADLE
-apply from: MAVEN_GRADLE
-apply from: BOM_GRADLE
-
-apply plugin: 'spring-io'
+apply plugin: 'io.spring.convention.spring-pom'
 
 description = "Aggregator for Spring Session and Spring Data Mongo"
 
-dependencyManagement {
-	springIoTestRuntime {
-		imports {
-			mavenBom "io.spring.platform:platform-bom:${springIoVersion}"
-		}
-	}
-}
-
 dependencies {
-	compile project(':spring-session'),
-			"org.springframework.data:spring-data-mongodb:$springDataMongoDBVersion"
+	compile project(':spring-session')
+	compile "org.springframework.data:spring-data-mongodb"
 }

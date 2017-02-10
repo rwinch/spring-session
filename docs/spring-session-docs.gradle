@@ -1,51 +1,28 @@
-buildscript {
-	repositories {
-		jcenter()
-	}
-
-	dependencies {
-		classpath 'org.kordamp.gradle:livereload-gradle-plugin:0.2.1'
-	}
-}
-
-apply plugin: 'org.kordamp.gradle.livereload'
-apply from: JAVA_GRADLE
-apply plugin: 'org.asciidoctor.convert'
-
-liveReload {
-	docRoot asciidoctor.sourceDir.canonicalPath
-}
-
-repositories {
-	maven { url 'http://dist.gemstone.com/maven/release' }
-}
-
-asciidoctorj {
-
-}
-
-tasks.findByPath("artifactoryPublish")?.enabled = false
+apply plugin: 'io.spring.convention.docs'
+apply plugin: 'io.spring.convention.spring-test'
 
 dependencies {
-	testCompile project(':spring-session'),
-			project(':spring-session-data-gemfire'),
-			project(':spring-session-data-mongo'),
-			project(':spring-session-data-redis'),
-			"org.springframework:spring-jdbc:${springVersion}",
-			"org.springframework:spring-messaging:${springVersion}",
-			"org.springframework:spring-webmvc:${springVersion}",
-			"org.springframework:spring-websocket:${springVersion}",
-			"org.springframework.security:spring-security-config:${springSecurityVersion}",
-			"org.springframework.security:spring-security-web:${springSecurityVersion}",
-			"org.springframework.security:spring-security-test:${springSecurityVersion}",
-			"junit:junit:$junitVersion",
-			"org.mockito:mockito-core:$mockitoVersion",
-			"org.springframework:spring-test:$springVersion",
-			"org.assertj:assertj-core:$assertjVersion",
-			"com.hazelcast:hazelcast:$hazelcastVersion",
-			"biz.paluch.redis:lettuce:$lettuceVersion",
-			"javax.servlet:javax.servlet-api:$servletApiVersion"
+	testCompile project(':spring-session')
+	testCompile project(':spring-session-data-gemfire')
+	testCompile project(':spring-session-data-mongo')
+	testCompile project(':spring-session-data-redis')
+	testCompile "org.springframework:spring-jdbc"
+	testCompile "org.springframework:spring-messaging"
+	testCompile "org.springframework:spring-webmvc"
+	testCompile "org.springframework:spring-websocket"
+	testCompile "org.springframework.security:spring-security-config"
+	testCompile "org.springframework.security:spring-security-web"
+	testCompile "org.springframework.security:spring-security-test"
+	testCompile "junit:junit"
+	testCompile "org.mockito:mockito-core"
+	testCompile "org.springframework:spring-test"
+	testCompile "org.assertj:assertj-core"
+	testCompile "com.hazelcast:hazelcast"
+	testCompile "biz.paluch.redis:lettuce"
+	testCompile "javax.servlet:javax.servlet-api"
 }
+
+def versions = dependencyManagement.managedVersions
 
 asciidoctor {
 	def ghTag = snapshotBuild ? 'master' : project.version
@@ -57,23 +34,12 @@ asciidoctor {
 			'gh-samples-url': "$ghUrl/samples/",
 			'download-url' : "https://github.com/spring-projects/spring-session/archive/${ghTag}.zip",
 			'spring-session-version' : version,
-			'spring-version' : springVersion,
-			'lettuce-version' : lettuceVersion,
-			'hazelcast-version' : hazelcastVersion,
+			'spring-version' : versions['org.springframework:spring-core'],
+			'lettuce-version' : versions['biz.paluch.redis:lettuce'],
+			'hazelcast-version' : versions['com.hazelcast:hazelcast'],
 			'docs-itest-dir' : rootProject.projectDir.path + '/docs/src/integration-test/java/',
 			'docs-test-dir' : rootProject.projectDir.path + '/docs/src/test/java/',
 			'docs-test-resources-dir' : rootProject.projectDir.path + '/docs/src/test/resources/',
 			'samples-dir' : rootProject.projectDir.path + '/samples/',
-			'session-main-resources-dir' : rootProject.projectDir.path + '/spring-session/src/main/resources/',
-
-			'source-highlighter' : 'coderay',
-			'imagesdir':'./images',
-			'icons': 'font',
-			'sectanchors':'',
-			'idprefix':'',
-			'idseparator':'-',
-			'docinfo1':'true',
-			'revnumber' : project.version
+			'session-main-resources-dir' : rootProject.projectDir.path + '/spring-session/src/main/resources/'
 }
-
-eclipse.project.name = 'spring-session-docs'
