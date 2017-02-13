@@ -18,3 +18,9 @@ dependencies {
 	integrationTestCompile seleniumDependencies
 
 }
+
+integrationTest {
+	doFirst {
+		systemProperties['spring.session.redis.namespace'] = project.name
+	}
+}
