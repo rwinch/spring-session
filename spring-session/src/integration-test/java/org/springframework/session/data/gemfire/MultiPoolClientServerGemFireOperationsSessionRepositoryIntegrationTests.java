@@ -172,7 +172,7 @@ public class MultiPoolClientServerGemFireOperationsSessionRepositoryIntegrationT
 
 		assertThat(sessionEvent).isInstanceOf(SessionCreatedEvent.class);
 		assertThat(sessionEvent.<ExpiringSession>getSession()).isEqualTo(expectedSession);
-		assertThat(this.sessionEventListener.getSessionEvent()).isNull();
+		assertThat((Object)this.sessionEventListener.getSessionEvent()).isNull();
 
 		ExpiringSession savedSession = this.gemfireSessionRepository.getSession(expectedSession.getId());
 

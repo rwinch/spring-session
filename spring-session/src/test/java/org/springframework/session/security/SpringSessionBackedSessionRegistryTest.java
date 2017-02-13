@@ -122,7 +122,7 @@ public class SpringSessionBackedSessionRegistryTest {
 		assertThat(sessionInfo.isExpired()).isTrue();
 		ArgumentCaptor<ExpiringSession> captor = ArgumentCaptor.forClass(ExpiringSession.class);
 		verify(this.sessionRepository).save(captor.capture());
-		assertThat(captor.getValue().getAttribute(SpringSessionBackedSessionInformation.EXPIRED_ATTR)).isEqualTo(Boolean.TRUE);
+		assertThat((Object)captor.getValue().getAttribute(SpringSessionBackedSessionInformation.EXPIRED_ATTR)).isEqualTo(Boolean.TRUE);
 	}
 
 	private ExpiringSession createSession(String sessionId, String userName, Long lastAccessed) {

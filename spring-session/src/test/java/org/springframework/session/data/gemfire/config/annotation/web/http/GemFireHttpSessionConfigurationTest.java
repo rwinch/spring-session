@@ -290,13 +290,13 @@ public class GemFireHttpSessionConfigurationTest {
 			this.gemfireConfiguration.sessionRegion(mockGemFireCache, mockRegionAttributes);
 
 		assertThat(sessionRegionFactoryBean).isNotNull();
-		assertThat(getField(sessionRegionFactoryBean, "clientRegionShortcut")).isEqualTo(
+		assertThat((Object)getField(sessionRegionFactoryBean, "clientRegionShortcut")).isEqualTo(
 			ClientRegionShortcut.CACHING_PROXY);
-		assertThat(getField(sessionRegionFactoryBean, "gemfireCache")).isEqualTo(mockGemFireCache);
-		assertThat(getField(sessionRegionFactoryBean, "poolName")).isEqualTo("TestPool");
-		assertThat(getField(sessionRegionFactoryBean, "regionAttributes")).isEqualTo(mockRegionAttributes);
-		assertThat(getField(sessionRegionFactoryBean, "regionName")).isEqualTo("TestRegion");
-		assertThat(getField(sessionRegionFactoryBean, "serverRegionShortcut")).isEqualTo(
+		assertThat((Object)getField(sessionRegionFactoryBean, "gemfireCache")).isEqualTo(mockGemFireCache);
+		assertThat((Object)getField(sessionRegionFactoryBean, "poolName")).isEqualTo("TestPool");
+		assertThat((Object)getField(sessionRegionFactoryBean, "regionAttributes")).isEqualTo(mockRegionAttributes);
+		assertThat((Object)getField(sessionRegionFactoryBean, "regionName")).isEqualTo("TestRegion");
+		assertThat((Object)getField(sessionRegionFactoryBean, "serverRegionShortcut")).isEqualTo(
 			RegionShortcut.REPLICATE_PERSISTENT);
 
 		verifyZeroInteractions(mockGemFireCache);

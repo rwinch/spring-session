@@ -213,7 +213,7 @@ public class EnableGemFireHttpSessionEventsIntegrationTests extends AbstractGemF
 		sessionEvent = this.sessionEventListener.getSessionEvent();
 
 		assertThat(sessionEvent).isInstanceOf(SessionDeletedEvent.class);
-		assertThat(sessionEvent.getSession()).isNull();
+		assertThat((Object)sessionEvent.getSession()).isNull();
 		assertThat(sessionEvent.getSessionId()).isEqualTo(expiredSession.getId());
 		assertThat(this.gemfireSessionRepository.getSession(sessionEvent.getSessionId()))
 				.isNull();
@@ -230,7 +230,7 @@ public class EnableGemFireHttpSessionEventsIntegrationTests extends AbstractGemF
 		AbstractSessionEvent sessionEvent = this.sessionEventListener.getSessionEvent();
 
 		assertThat(sessionEvent).isInstanceOf(SessionDeletedEvent.class);
-		assertThat(sessionEvent.getSession()).isNull();
+		assertThat((Object)sessionEvent.getSession()).isNull();
 		assertThat(sessionEvent.getSessionId()).isEqualTo(expectedSessionId);
 	}
 

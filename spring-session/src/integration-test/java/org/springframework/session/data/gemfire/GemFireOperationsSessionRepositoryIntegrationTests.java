@@ -183,15 +183,15 @@ public class GemFireOperationsSessionRepositoryIntegrationTests extends Abstract
 				touch(setAttribute(createSession("pieDoe"), "viper", "true")));
 		ExpiringSession sourDoeSession = save(touch(createSession("sourDoe")));
 
-		assertThat(get(johnBlumSession.getId())).isEqualTo(johnBlumSession);
-		assertThat(johnBlumSession.getAttribute("vip")).isEqualTo("yes");
-		assertThat(get(robWinchSession.getId())).isEqualTo(robWinchSession);
-		assertThat(robWinchSession.getAttribute("vip")).isEqualTo("yes");
-		assertThat(get(jonDoeSession.getId())).isEqualTo(jonDoeSession);
-		assertThat(jonDoeSession.getAttribute("vip")).isEqualTo("no");
-		assertThat(get(pieDoeSession.getId())).isEqualTo(pieDoeSession);
-		assertThat(pieDoeSession.getAttributeNames().contains("vip")).isFalse();
-		assertThat(get(sourDoeSession.getId())).isEqualTo(sourDoeSession);
+		assertThat((Object)get(johnBlumSession.getId())).isEqualTo(johnBlumSession);
+		assertThat((Object)johnBlumSession.getAttribute("vip")).isEqualTo("yes");
+		assertThat((Object)get(robWinchSession.getId())).isEqualTo(robWinchSession);
+		assertThat((Object)robWinchSession.getAttribute("vip")).isEqualTo("yes");
+		assertThat((Object)get(jonDoeSession.getId())).isEqualTo(jonDoeSession);
+		assertThat((Object)jonDoeSession.getAttribute("vip")).isEqualTo("no");
+		assertThat((Object)get(pieDoeSession.getId())).isEqualTo(pieDoeSession);
+		assertThat((Boolean)pieDoeSession.getAttributeNames().contains("vip")).isFalse();
+		assertThat((Object)get(sourDoeSession.getId())).isEqualTo(sourDoeSession);
 		assertThat(sourDoeSession.getAttributeNames().contains("vip")).isFalse();
 
 		Map<String, ExpiringSession> vipSessions = doFindByIndexNameAndIndexValue("vip",
@@ -231,11 +231,11 @@ public class GemFireOperationsSessionRepositoryIntegrationTests extends Abstract
 		ExpiringSession sessionFour = save(touch(createSession("johnBlum")));
 		ExpiringSession sessionFive = save(touch(createSession("robWinch")));
 
-		assertThat(get(sessionOne.getId())).isEqualTo(sessionOne);
-		assertThat(get(sessionTwo.getId())).isEqualTo(sessionTwo);
-		assertThat(get(sessionThree.getId())).isEqualTo(sessionThree);
-		assertThat(get(sessionFour.getId())).isEqualTo(sessionFour);
-		assertThat(get(sessionFive.getId())).isEqualTo(sessionFive);
+		assertThat((Object)get(sessionOne.getId())).isEqualTo(sessionOne);
+		assertThat((Object)get(sessionTwo.getId())).isEqualTo(sessionTwo);
+		assertThat((Object)get(sessionThree.getId())).isEqualTo(sessionThree);
+		assertThat((Object)get(sessionFour.getId())).isEqualTo(sessionFour);
+		assertThat((Object)get(sessionFive.getId())).isEqualTo(sessionFive);
 
 		Map<String, ExpiringSession> johnBlumSessions = doFindByPrincipalName("johnBlum");
 
@@ -350,15 +350,15 @@ public class GemFireOperationsSessionRepositoryIntegrationTests extends Abstract
 				.isTrue();
 
 		assertThat(Boolean.valueOf(
-				String.valueOf(savedSession.getAttribute(expectedAttributeNames.get(0)))))
+				String.valueOf((Object)savedSession.getAttribute(expectedAttributeNames.get(0)))))
 						.isTrue();
 		assertThat(Double.valueOf(
-				String.valueOf(savedSession.getAttribute(expectedAttributeNames.get(1)))))
+				String.valueOf((Object)savedSession.getAttribute(expectedAttributeNames.get(1)))))
 						.isEqualTo(Math.PI);
 		assertThat(
-				String.valueOf(savedSession.getAttribute(expectedAttributeNames.get(2))))
+				String.valueOf((Object)savedSession.getAttribute(expectedAttributeNames.get(2))))
 						.isEqualTo("test");
-		assertThat(savedSession.getAttribute(expectedAttributeNames.get(3)))
+		assertThat((Object)savedSession.getAttribute(expectedAttributeNames.get(3)))
 				.isEqualTo(jonDoe);
 	}
 

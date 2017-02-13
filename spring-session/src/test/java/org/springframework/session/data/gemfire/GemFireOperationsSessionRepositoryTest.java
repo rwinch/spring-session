@@ -276,7 +276,7 @@ public class GemFireOperationsSessionRepositoryTest {
 
 				assertThat(sessionEvent.getSource()).isSameAs(
 						GemFireOperationsSessionRepositoryTest.this.sessionRepository);
-				assertThat(sessionEvent.getSession()).isSameAs(mockSession);
+				assertThat((Object)sessionEvent.getSession()).isSameAs(mockSession);
 				assertThat(sessionEvent.getSessionId()).isEqualTo(expectedSessionId);
 
 				return null;
@@ -318,7 +318,7 @@ public class GemFireOperationsSessionRepositoryTest {
 		assertThat(actualSession.getLastAccessedTime()).isNotEqualTo(currentLastAccessedTime);
 		assertThat(actualSession.getLastAccessedTime()).isGreaterThanOrEqualTo(expectedCreationTime);
 		assertThat(actualSession.getAttributeNames()).isEqualTo(Collections.singleton("attrOne"));
-		assertThat(String.valueOf(actualSession.getAttribute("attrOne"))).isEqualTo("test");
+		assertThat(String.valueOf((Object)actualSession.getAttribute("attrOne"))).isEqualTo("test");
 
 		verify(this.mockTemplate, times(1)).get(eq(expectedId));
 		verify(mockSession, times(1)).isExpired();
@@ -400,7 +400,7 @@ public class GemFireOperationsSessionRepositoryTest {
 
 				assertThat(sessionEvent.getSource()).isSameAs(
 						GemFireOperationsSessionRepositoryTest.this.sessionRepository);
-				assertThat(sessionEvent.getSession()).isSameAs(mockSession);
+				assertThat((Object)sessionEvent.getSession()).isSameAs(mockSession);
 				assertThat(sessionEvent.getSessionId()).isEqualTo(expectedSessionId);
 
 				return null;
@@ -430,7 +430,7 @@ public class GemFireOperationsSessionRepositoryTest {
 
 				assertThat(sessionEvent.getSource()).isSameAs(
 						GemFireOperationsSessionRepositoryTest.this.sessionRepository);
-				assertThat(sessionEvent.getSession()).isNull();
+				assertThat((Object)sessionEvent.getSession()).isNull();
 				assertThat(sessionEvent.getSessionId()).isEqualTo(expectedSessionId);
 
 				return null;
