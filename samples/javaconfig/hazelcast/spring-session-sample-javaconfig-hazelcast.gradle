@@ -9,6 +9,7 @@ dependencies {
 	compile "org.webjars:webjars-taglib"
 	compile "com.hazelcast:hazelcast-client"
 	compile jstlDependencies
+	compile slf4jDependencies
 
 	providedCompile "javax.servlet:javax.servlet-api"
 	providedCompile "javax.servlet.jsp:javax.servlet.jsp-api"

@@ -9,6 +9,7 @@ dependencies {
 	compile "org.webjars:bootstrap"
 	compile "org.webjars:webjars-taglib"
 	compile jstlDependencies
+	compile slf4jDependencies
 
 	providedCompile "javax.servlet:javax.servlet-api"
 

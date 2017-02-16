@@ -7,6 +7,7 @@ dependencies {
 	compile "org.webjars:webjars-taglib"
 	compile "com.h2database:h2"
 	compile jstlDependencies
+	compile slf4jDependencies
 
 	providedCompile "javax.servlet:javax.servlet-api"
 
