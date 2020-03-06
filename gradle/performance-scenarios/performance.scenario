@@ -1,0 +1,66 @@
+# TODO edit this according to your build
+file-to-change = "./spring-session-core/src/main/java/org/springframework/session/MapSession.java"
+tasks-to-run = [ "assemble" ]
+max-workers = 8
+
+
+# Configuration below shouldn't need to be edited
+
+base {
+    clear-project-cache-before = SCENARIO
+    clear-instant-execution-state-before = SCENARIO
+
+    gradle-args = [
+        "-Dorg.gradle.workers.max=${max-workers}",
+        "--no-scan",
+        "--no-build-cache",
+    ]
+
+    measured-build-ops = [
+        "org.gradle.api.internal.artifacts.configurations.ResolveConfigurationDependenciesBuildOperationType",
+        "org.gradle.api.internal.artifacts.transform.DefaultTransformer$FingerprintTransformInputsOperation",
+        "org.gradle.internal.execution.steps.CaptureStateBeforeExecutionStep$Operation",
+        "org.gradle.caching.internal.operations.BuildCacheArchivePackBuildOperationType",
+        "org.gradle.caching.internal.operations.BuildCacheArchiveUnpackBuildOperationType",
+        "org.gradle.internal.execution.steps.SnapshotOutputsStep$Operation",
+        "org.gradle.api.internal.tasks.execution.ExecuteTaskActionBuildOperationType",
+        "org.gradle.api.internal.tasks.execution.ExecuteTaskBuildOperationType",
+        "org.gradle.api.internal.tasks.SnapshotTaskInputsBuildOperationType",
+    ]
+}
+
+enableInstantExecution = ["-Dorg.gradle.unsafe.instant-execution=true"]
+
+enableVfsRetention = [
+    "-Dorg.gradle.unsafe.vfs.retention=true",
+    "-Dorg.gradle.unsafe.vfs.changes="${file-to-change}
+]
+
+noOptimizations = ${base} {
+    title = "Baseline"
+    tasks = ${tasks-to-run}
+
+    apply-non-abi-change-to = ${file-to-change}
+    # apply-abi-change-to = ${file-to-change}
+}
+
+onlyInstantExecution = ${noOptimizations} {
+    title = "Instant execution"
+    gradle-args = ${noOptimizations.gradle-args} ${enableInstantExecution}
+}
+
+onlyVfsRetention = ${noOptimizations} {
+    title = "VFS retention"
+    gradle-args = ${noOptimizations.gradle-args} ${enableVfsRetention}
+}
+
+allOptimizations = ${noOptimizations} {
+    title = "All optimizations"
+    gradle-args = ${noOptimizations.gradle-args} ${enableInstantExecution} ${enableVfsRetention}
+}
+
+# scenario provided as a helper to get this working at first
+configurationTime = ${base} {
+    tasks = ["help"]
+    warm-ups = 10
+}

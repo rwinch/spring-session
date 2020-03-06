@@ -1,0 +1,8 @@
+regular {
+    tasks = ["help"]
+}
+
+instant {
+    gradle-args = ["-Dorg.gradle.unsafe.instant-execution=true"]
+    tasks = ["help"]
+}
