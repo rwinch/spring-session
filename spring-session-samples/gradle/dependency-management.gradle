@@ -1,0 +1,18 @@
+def versionCatalog = extensions.getByType(VersionCatalogsExtension).named("libs")
+def springBootVersion = versionCatalog.findVersion("org-springframework-boot").get().displayName
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+	}
+
+	dependencies {
+		dependency 'com.maxmind.geoip2:geoip2:2.16.1'
+		dependency 'org.webjars:bootstrap:2.3.2'
+		dependency 'org.webjars:html5shiv:3.7.3-1'
+		dependency 'org.webjars:jquery:3.6.0'
+		dependency 'org.webjars:knockout:3.5.1'
+		dependency 'org.webjars:sockjs-client:1.5.1'
+		dependency 'org.webjars:stomp-websocket:2.3.4'
+	}
+}

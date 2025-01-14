@@ -1,28 +1,32 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url 'https://repo.spring.io/plugins-release' }
+    }
+}
+
+plugins {
+    id "com.gradle.develocity" version "3.17.6"
+    id "io.spring.ge.conventions" version "0.0.17"
+}
+
 rootProject.name = 'spring-session-build'
 
-include 'docs'
-
-include 'samples:boot'
-include 'samples:custom-cookie'
-include 'samples:findbyusername'
-include 'samples:hazelcast'
-include 'samples:hazelcast-spring'
-include 'samples:httpsession'
-include 'samples:httpsession-gemfire-clientserver'
-include 'samples:httpsession-gemfire-clientserver-xml'
-include 'samples:httpsession-gemfire-p2p'
-include 'samples:httpsession-gemfire-p2p-xml'
-include 'samples:httpsession-jdbc'
-include 'samples:httpsession-jdbc-xml'
-include 'samples:httpsession-xml'
-include 'samples:rest'
-include 'samples:security'
-include 'samples:users'
-include 'samples:websocket'
-include 'samples:mongo'
-
-include 'spring-session'
-include 'spring-session-data-gemfire'
+include 'spring-session-dependencies'
+include 'spring-session-bom'
+include 'spring-session-core'
+include 'spring-session-data-mongodb'
 include 'spring-session-data-redis'
+include 'spring-session-docs'
+include 'spring-session-hazelcast'
 include 'spring-session-jdbc'
-include 'spring-session-data-mongo'
+
+file('spring-session-samples').eachDirMatch(~/spring-session-sample-.*/) { dir ->
+    include dir.name
+    project(":$dir.name").projectDir = dir
+}
+
+rootProject.children.each { project ->
+    project.buildFileName = "${project.name}.gradle"
+}
+

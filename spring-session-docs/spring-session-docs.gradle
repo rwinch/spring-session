@@ -1,0 +1,98 @@
+plugins {
+    id 'org.antora' version '1.0.0'
+    id 'io.spring.antora.generate-antora-yml' version '0.0.1'
+}
+
+apply plugin: 'io.spring.convention.docs'
+apply plugin: 'io.spring.convention.spring-test'
+
+dependencies {
+	management platform(project(":spring-session-dependencies"))
+	testImplementation project(':spring-session-core')
+	testImplementation project(':spring-session-data-redis')
+	testImplementation project(':spring-session-hazelcast')
+	testImplementation project(':spring-session-jdbc')
+	testImplementation 'org.springframework:spring-jdbc'
+	testImplementation 'org.springframework:spring-messaging'
+	testImplementation 'org.springframework:spring-webmvc'
+	testImplementation 'org.springframework:spring-websocket'
+	testImplementation 'org.springframework.security:spring-security-config'
+	testImplementation 'org.springframework.security:spring-security-web'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.mockito:mockito-core'
+	testImplementation 'org.mockito:mockito-junit-jupiter'
+	testImplementation 'org.springframework:spring-test'
+	testImplementation 'org.assertj:assertj-core'
+	testImplementation 'com.hazelcast:hazelcast'
+	testImplementation 'io.lettuce:lettuce-core'
+	testImplementation 'jakarta.servlet:jakarta.servlet-api'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+
+antora {
+    playbook = 'cached-antora-playbook.yml'
+    playbookProvider {
+        repository = 'spring-projects/spring-session'
+        branch = 'docs-build'
+        path = 'lib/antora/templates/per-branch-antora-playbook.yml'
+        checkLocalBranch = true
+    }
+    options = [clean: true, fetch: !project.gradle.startParameter.offline, stacktrace: true]
+}
+
+tasks.named("generateAntoraYml") {
+    asciidocAttributes = project.provider( { generateAttributes() } )
+    asciidocAttributes.putAll(providers.provider( { resolvedVersions(project.configurations.testRuntimeClasspath) }))
+}
+
+
+def generateAttributes() {
+	def springBootVersion = getLibVersion(libs.versions.org.springframework.boot.get())
+	def springSecurityVersion = getLibVersion(libs.org.springframework.security.spring.security.bom.get().version)
+	def springFrameworkVersion = getLibVersion(libs.org.springframework.spring.framework.bom.get().version)
+    def ghTag = snapshotBuild ? 'main' : project.version
+	def docsUrl = 'https://docs.spring.io'
+    def springBootRefDocs =  "${docsUrl}/spring-boot/docs/${springBootVersion}/reference/html"
+	def springSecurityRefDocs = "${docsUrl}/spring-security/reference/${springSecurityVersion}"
+	def springFrameworkRefDocs = "${docsUrl}/spring-framework/reference/${springFrameworkVersion}"
+    return ['gh-tag':ghTag,
+            'spring-boot-version': springBootVersion,
+            'spring-boot-ref-docs': springBootRefDocs.toString(),
+            'spring-session-version': project.version,
+            'spring-security-ref-docs': springSecurityRefDocs.toString(),
+            'spring-framework-ref-docs': springFrameworkRefDocs.toString(),
+            'docs-url': docsUrl]
+}
+
+static def getLibVersion(String version) {
+	return version.contains("-")
+			? version.substring(0, version.indexOf("-"))
+			: version
+}
+
+sourceSets {
+    test {
+        java {
+            srcDirs = ['modules/ROOT/examples/java']
+        }
+        resources {
+            srcDirs = ['modules/ROOT/examples/resources']
+        }
+    }
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/release' }
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+def resolvedVersions(Configuration configuration) {
+    return configuration.resolvedConfiguration
+                .resolvedArtifacts
+                .collectEntries { [(it.name + "-version"): it.moduleVersion.id.version] }
+
+}

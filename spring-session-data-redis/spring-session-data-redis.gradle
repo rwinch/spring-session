@@ -1,0 +1,30 @@
+apply plugin: 'io.spring.convention.spring-module'
+
+description = "Spring Session Redis implementation"
+
+dependencies {
+	management platform(project(":spring-session-dependencies"))
+	api project(':spring-session-core')
+	api ("org.springframework.data:spring-data-redis") {
+		exclude group: "org.slf4j", module: 'jcl-over-slf4j'
+	}
+
+	optional "io.projectreactor:reactor-core"
+	optional "org.springframework:spring-web"
+
+	testImplementation "org.assertj:assertj-core"
+	testImplementation "org.mockito:mockito-core"
+	testImplementation "org.mockito:mockito-junit-jupiter"
+	testImplementation "org.springframework:spring-test"
+	testImplementation "io.projectreactor:reactor-test"
+	testImplementation "jakarta.servlet:jakarta.servlet-api"
+	testImplementation "org.springframework:spring-web"
+	testImplementation "org.springframework.security:spring-security-core"
+	testImplementation "org.junit.jupiter:junit-jupiter-api"
+	testImplementation "org.awaitility:awaitility"
+	testImplementation "io.lettuce:lettuce-core"
+	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+
+	integrationTestCompile "org.testcontainers:testcontainers"
+	integrationTestCompile "com.redis:testcontainers-redis:1.7.0"
+}

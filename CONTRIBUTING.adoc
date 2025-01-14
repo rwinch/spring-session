@@ -3,30 +3,37 @@
 Spring Session is released under the Apache 2.0 license. If you would like to contribute
 something, or simply want to hack on the code this document should help you get started.
 
+
 == Code of Conduct
-This project adheres to the Contributor Covenant link:CODE_OF_CONDUCT.adoc[code of conduct].
-By participating, you  are expected to uphold this code. Please report unacceptable behavior to spring-code-of-conduct@pivotal.io.
+
+Please see our https://github.com/spring-projects/.github/blob/main/CODE_OF_CONDUCT.md[code of conduct].
+
+
+== Reporting Security Vulnerabilities
+
+Please see our https://github.com/spring-projects/spring-session/security/policy[Security policy].
+
 
 == Using GitHub issues
 
 We use GitHub issues to track bugs and enhancements. If you have a general usage question
-please ask on http://stackoverflow.com[Stack Overflow]. The Spring Session team and the
-broader community monitor the http://stackoverflow.com/tags/spring-session[`spring-session`]
+please ask on https://stackoverflow.com[Stack Overflow]. The Spring Session team and the
+broader community monitor the https://stackoverflow.com/tags/spring-session[`spring-session`]
 tag.
 
 If you are reporting a bug, please help to speed up problem diagnosis by providing as much
 information as possible. Ideally, that would include a small sample project that
 reproduces the problem.
 
+== Create your branch from the oldest maintenance branch
+
+Create your topic branch to be submitted as a pull request from the oldest impacted and supported maintenance branch.
+You can find the supported versions by looking at the https://github.com/spring-projects/spring-session/milestones[milestones page].
+Switch to a branch named `<major>.<minor>.x` from the smallest milestone in the format of `<major>.<minor>.<patch>(-<prerelease>)`.
+The spring team will ensure the code gets merged forward into additional branches.
 
 
 == Sign the Contributor License Agreement
-Before we accept a non-trivial patch or pull request we will need you to sign the
-https://support.springsource.com/spring_committer_signup[contributor's agreement].
-If you have previously signed the CLA for any project, there is no need to sign up again.
-Signing the contributor's agreement does not grant anyone commit rights to the main
-repository, but it does mean that we can accept your contributions, and you will get an
-author credit if we do.  Active contributors might be asked to join the core team, and
-given the ability to merge pull requests. Use the project `Spring Security` (the parent project)
-and '`Rob Winch`' in the project lead field when you complete the form.
+If you have not previously done so, please fill out and
+submit the https://cla.pivotal.io/sign/spring[Contributor License Agreement].
 

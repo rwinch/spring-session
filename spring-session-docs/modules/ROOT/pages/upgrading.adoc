@@ -1,0 +1,20 @@
+[[upgrading-3.0]]
+= Upgrading to 3.x
+
+With the new major release version, the Spring Session team took the opportunity to make some non-passive changes.
+The focus of these changes is to improve and harmonize Spring Session's APIs as well as remove the deprecated components.
+
+== Baseline Update
+
+Spring Session 3.0 requires Java 17 and Spring Framework 6.0 as a baseline, since its entire codebase is now based on Java 17 source code.
+See https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-5.x[Upgrading to Spring Framework 5.x] for more on upgrading Spring Framework.
+
+== Replaced and Removed Packages, Classes, and Methods
+
+The following changes were made to packages, classes, and methods:
+
+
+
+== Dropped Support
+
+

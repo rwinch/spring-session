@@ -1,68 +1,68 @@
 buildscript {
-	repositories {
-		maven { url "https://repo.spring.io/plugins-release" }
+	ext {
+		releaseBuild = version.endsWith('RELEASE')
+		snapshotBuild = version.endsWith('SNAPSHOT')
+		milestoneBuild = !(releaseBuild || snapshotBuild)
 	}
+
+	repositories {
+		gradlePluginPortal()
+		maven { url 'https://repo.spring.io/plugins-release/' }
+        maven {
+            url = 'https://repo.spring.io/plugins-snapshot'
+            if (project.hasProperty('artifactoryUsername')) {
+                credentials {
+                    username "$artifactoryUsername"
+                    password "$artifactoryPassword"
+                }
+            }
+        }
+	}
+
 	dependencies {
-		classpath("org.gradle.api.plugins:gradle-tomcat-plugin:1.2.3")
-		classpath("org.springframework.build.gradle:propdeps-plugin:0.0.7")
-		classpath("io.spring.gradle:spring-io-plugin:0.0.4.RELEASE")
-		classpath('me.champeau.gradle:gradle-javadoc-hotfix-plugin:0.1')
-		classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.2'
-		classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
+		classpath libs.org.springframework.boot.spring.boot.gradle.plugin
 	}
 }
+
+plugins {
+	id "com.github.ben-manes.versions"
+}
+
+apply plugin: 'io.spring.convention.root'
+apply plugin: 'io.spring.security.release'
 
 group = 'org.springframework.session'
+description = 'Spring Session'
 
-ext.springBootVersion = '1.3.2.RELEASE'
-ext.IDE_GRADLE = "$rootDir/gradle/ide.gradle"
-ext.JAVA_GRADLE = "$rootDir/gradle/java.gradle"
-ext.SPRING3_GRADLE = "$rootDir/gradle/spring3.gradle"
-ext.MAVEN_GRADLE = "$rootDir/gradle/publish-maven.gradle"
-ext.TOMCAT_GRADLE = "$rootDir/gradle/tomcat.gradle"
-ext.TOMCAT_6_GRADLE = "$rootDir/gradle/tomcat6.gradle"
-ext.TOMCAT_7_GRADLE = "$rootDir/gradle/tomcat7.gradle"
+subprojects {
+	apply plugin: 'io.spring.javaformat'
 
-ext.releaseBuild = version.endsWith('RELEASE')
-ext.snapshotBuild = version.endsWith('SNAPSHOT')
-ext.milestoneBuild = !(releaseBuild || snapshotBuild)
+	plugins.withType(JavaPlugin) {
+		sourceCompatibility = JavaVersion.VERSION_17
+	}
 
-apply plugin: 'sonar-runner'
-apply plugin: 'base'
+	tasks.withType(Test) {
+		useJUnitPlatform()
+	}
 
-
-sonarRunner {
-	sonarProperties {
-		property "sonar.java.coveragePlugin", "jacoco"
-		property "sonar.projectName", "Spring Session"
-		property "sonar.jacoco.reportPath", "${buildDir.name}/jacoco.exec"
-		property "sonar.links.homepage", 'https://github.com/spring-projects/spring-session'
-		property "sonar.links.ci", 'https://build.spring.io/browse/SESSION'
-		property "sonar.links.issue", 'https://github.com/spring-projects/spring-session/issues'
-		property "sonar.links.scm", 'https://github.com/spring-projects/spring-session'
-		property "sonar.links.scm_dev", 'https://github.com/spring-projects/spring-session.git'
-		property "sonar.java.coveragePlugin", "jacoco"
+	// Spring Framework 6.1 requires -parameters to be able to introspect method parameter names
+	tasks.withType(JavaCompile) {
+		options.compilerArgs.add("-parameters")
 	}
 }
 
-task configDocsZip(dependsOn: [':docs:asciidoctor',':spring-session:javadoc']) << {
-	project.tasks.docsZip.from(project(':docs').asciidoctor) {
-		into('reference')
-	}
-	project.tasks.docsZip.from(project(':spring-session').javadoc) {
-		into('api')
-	}
+nohttp {
+    source.exclude "buildSrc/build/**"
+	source.exclude "spring-session-docs/.gradle/nodejs/**"
+	source.exclude "spring-session-docs/modules/ROOT/examples/**/build/**"
 }
 
-
-task docsZip(type: Zip, dependsOn: 'configDocsZip') {
-	group = "Distribution"
-	baseName = "spring-session"
-	classifier = "docs"
-	description = "Builds -${classifier} archive containing api and reference " +
-			"for deployment."
-}
-
-artifacts {
-	archives docsZip
+springRelease {
+	repositoryOwner = "spring-projects"
+	repositoryName = "spring-session"
+	weekOfMonth = 3
+	dayOfWeek = 2
+	referenceDocUrl = "https://docs.spring.io/spring-session/reference/{version}/index.html"
+	apiDocUrl = "https://docs.spring.io/spring-session/docs/{version}/api/"
+	replaceSnapshotVersionInReferenceDocUrl = true
 }

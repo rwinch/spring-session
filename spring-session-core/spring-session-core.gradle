@@ -1,0 +1,32 @@
+apply plugin: 'io.spring.convention.spring-module'
+
+description = "Spring Session"
+
+dependencies {
+	management platform(project(":spring-session-dependencies"))
+
+	api "org.springframework:spring-jcl"
+
+	optional "io.projectreactor:reactor-core"
+	optional "jakarta.servlet:jakarta.servlet-api"
+	optional "org.springframework:spring-context"
+	optional "org.springframework:spring-jdbc"
+	optional "org.springframework:spring-messaging"
+	optional "org.springframework:spring-web"
+	optional "org.springframework:spring-webflux"
+	optional "org.springframework:spring-websocket"
+	optional "org.springframework.security:spring-security-core"
+	optional "org.springframework.security:spring-security-web"
+
+	testImplementation "io.projectreactor:reactor-test"
+	testImplementation "org.mockito:mockito-core"
+	testImplementation "org.mockito:mockito-junit-jupiter"
+	testImplementation "edu.umd.cs.mtc:multithreadedtc"
+	testImplementation "org.springframework:spring-test"
+	testImplementation "org.assertj:assertj-core"
+	testImplementation "org.springframework.security:spring-security-core"
+	testImplementation "org.junit.jupiter:junit-jupiter-api"
+	testImplementation "org.junit.jupiter:junit-jupiter-params"
+	testImplementation "org.aspectj:aspectjweaver"
+	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+}

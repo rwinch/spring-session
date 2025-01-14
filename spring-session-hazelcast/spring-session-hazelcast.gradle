@@ -1,0 +1,20 @@
+apply plugin: 'io.spring.convention.spring-module'
+
+dependencies {
+	management platform(project(":spring-session-dependencies"))
+	api project(':spring-session-core')
+	api "com.hazelcast:hazelcast"
+	api "org.springframework:spring-context"
+
+	testImplementation "jakarta.servlet:jakarta.servlet-api"
+	testImplementation "org.assertj:assertj-core"
+	testImplementation "org.mockito:mockito-core"
+	testImplementation "org.mockito:mockito-junit-jupiter"
+	testImplementation "org.springframework:spring-test"
+	testImplementation "org.springframework:spring-web"
+	testImplementation "org.springframework.security:spring-security-core"
+	testImplementation "org.junit.jupiter:junit-jupiter-api"
+	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+
+	integrationTestCompile "org.testcontainers:testcontainers"
+}

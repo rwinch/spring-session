@@ -1,24 +1,76 @@
+= Spring Session
+
 image:https://badges.gitter.im/spring-projects/spring-session.svg[link="https://gitter.im/spring-projects/spring-session?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"]
 
-= Spring Session
-Rob Winch
+image:https://github.com/spring-projects/spring-session/workflows/CI/badge.svg?branch=main["Build Status", link="https://github.com/spring-projects/spring-session/actions?query=workflow%3ACI"]
 
-Spring Session aims to provide a common infrastructure for managing sessions. This provides many benefits including:
+image:https://img.shields.io/badge/Revved%20up%20by-Develocity-06A0CE?logo=Gradle&labelColor=02303A["Revved up by Develocity", link="https://ge.spring.io/scans?search.rootProjectNames=spring-session-build"]
 
-* Accessing a session from any environment (i.e. web, messaging infrastructure, etc)
-* In a web environment
-** Support for clustering in a vendor neutral way
-** Pluggable strategy for determining the session id
-** Easily keep the HttpSession alive when a WebSocket is active
+Spring Session provides an API and implementations for managing a user's session information, while also making it trivial to support clustered sessions without being tied to an application container specific solution.
+It also provides transparent integration with:
+
+* `HttpSession` - allows replacing the `HttpSession` in an application container (i.e. Tomcat) neutral way, with support for providing session IDs in headers to work with RESTful APIs.
+* `WebSocket` - provides the ability to keep the `HttpSession` alive when receiving WebSocket messages
+* `WebSession` - allows replacing the Spring WebFlux's `WebSession` in an application container neutral way.
+
+== Modules
+
+This Spring Session repository consists of the following modules:
+
+* Spring Session Core - provides core Spring Session functionalities and APIs
+* Spring Session Data Redis - provides `SessionRepository` and `ReactiveSessionRepository` implementation backed by Redis and configuration support
+* Spring Session JDBC - provides `SessionRepository` implementation backed by a relational database and configuration support
+* Spring Session Hazelcast - provides `SessionRepository` implementation backed by Hazelcast and configuration support
+* Spring Session MongoDB - provides `SessionRepository` implementation backed by MongoDB and configuration support
+
+Additional Spring Session modules can be found in the https://github.com/spring-projects/spring-session-data-geode[spring-session-data-geode] repository.
+
+== Getting Started
+
+We recommend you visit the https://docs.spring.io/spring-session/reference/[Spring Session Reference] and look through the "Samples and Guides" section to see which one best suits your needs.
+
+== Samples
+
+Spring Session samples are available in the https://github.com/spring-projects/spring-session/tree/main/spring-session-samples[spring-session-samples] directory.
+
+
+== Contributing
+
+Please see our https://github.com/spring-projects/spring-session/blob/main/CONTRIBUTING.adoc[Contributing guidelines]
+for information on how to report issues, enhancements or security vulnerabilities.
+
+== Building from Source
+
+Spring Session uses a https://gradle.org[Gradle]-based build system.
+In the instructions below, `./gradlew` is invoked from the root of the source tree and serves as
+a cross-platform, self-contained bootstrap mechanism for the build.
+
+Check out sources
+----
+git clone git@github.com:spring-projects/spring-session.git
+----
+
+Install all spring-\* jars into your local Maven cache
+----
+./gradlew install
+----
+
+Compile and test; build all jars, distribution zips, and docs
+----
+./gradlew build
+----
+
+
+== Documentation
+
+You can find the documentation, samples, and guides for using Spring Session on the https://projects.spring.io/spring-session/[Spring Session project site].
+
+For more in depth information, visit the https://docs.spring.io/spring-session/reference/[Spring Session Reference].
 
 == Code of Conduct
-This project adheres to the Contributor Covenant link:CODE_OF_CONDUCT.adoc[code of conduct].
-By participating, you  are expected to uphold this code. Please report unacceptable behavior to spring-code-of-conduct@pivotal.io.
 
-= Spring Session Project Site
+Please see our https://github.com/spring-projects/.github/blob/main/CODE_OF_CONDUCT.md[code of conduct].
 
-You can find the documentation, issue management, support, samples, and guides for using Spring Session at http://projects.spring.io/spring-session/
+== License
 
-= License
-
-Spring Session is Open Source software released under the http://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 license].
+Spring Session is Open Source software released under the https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 license].
