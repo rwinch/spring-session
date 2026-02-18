@@ -26,25 +26,9 @@ sourceSets {
 
 gradlePlugin {
     plugins {
-        checkAntoraVersion {
-            id = "org.springframework.antora.check-version"
-            implementationClass = "org.springframework.gradle.antora.AntoraVersionPlugin"
-        }
         managementConfiguration {
             id = "io.spring.convention.management-configuration"
             implementationClass = "io.spring.gradle.convention.ManagementConfigurationPlugin"
-        }
-        sagan {
-            id = "org.springframework.security.sagan"
-            implementationClass = "org.springframework.gradle.sagan.SaganPlugin"
-        }
-        githubMilestone {
-            id = "org.springframework.github.milestone"
-            implementationClass = "org.springframework.gradle.github.milestones.GitHubMilestonePlugin"
-        }
-        propdeps {
-            id = "org.springframework.propdeps"
-            implementationClass = "org.springframework.gradle.propdeps.PropDepsPlugin"
         }
     }
 }
