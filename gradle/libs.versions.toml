@@ -1,7 +1,0 @@
-[versions]
-org-testcontainers = "1.21.4"
-org-springframework-boot = "3.3.13"
-
-[libraries]
-org-springframework-boot-spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "org-springframework-boot" }
-org-testcontainers-testcontainers-bom = { module = "org.testcontainers:testcontainers-bom", version.ref = "org-testcontainers" }
