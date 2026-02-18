@@ -1,16 +1,28 @@
-buildscript {
-	ext {
-		releaseBuild = version.endsWith('RELEASE')
-		snapshotBuild = version.endsWith('SNAPSHOT')
-		milestoneBuild = !(releaseBuild || snapshotBuild)
-	}
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.13'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
 
-	repositories {
-		gradlePluginPortal()
-		maven { url 'https://repo.spring.io/plugins-release/' }
-	}
+configurations {
+    management {
+        visible = false
+        canBeConsumed = false
+        canBeResolved = false
+    }
+}
+configurations.compileClasspath.extendsFrom(configurations.management)
+configurations.runtimeClasspath.extendsFrom(configurations.management)
+configurations.testCompileClasspath.extendsFrom(configurations.management)
+configurations.testRuntimeClasspath.extendsFrom(configurations.management)
 
-	dependencies {
-		classpath libs.org.springframework.boot.spring.boot.gradle.plugin
-	}
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/snapshot' }
+    maven { url 'https://repo.spring.io/milestone' }
+}
+
+dependencies {
+    management platform(libs.org.testcontainers.testcontainers.bom)
+    testImplementation "org.testcontainers:testcontainers"
 }

@@ -5,8 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'spring-session-build'
-
-include 'spring-session-samples:spring-session-sample-boot-websocket'
-
-
+rootProject.name = 'spring-session-sample-boot-websocket'
