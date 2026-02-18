@@ -4,9 +4,6 @@ plugins {
     id "groovy"
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-
-
 gradlePlugin {
     plugins {
         managementConfiguration {
