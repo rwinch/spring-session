@@ -1,9 +1,20 @@
 plugins {
     id 'java'
-    id 'io.spring.convention.management-configuration'
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
 }
+
+configurations {
+    management {
+        visible = false
+        canBeConsumed = false
+        canBeResolved = false
+    }
+}
+configurations.compileClasspath.extendsFrom(configurations.management)
+configurations.runtimeClasspath.extendsFrom(configurations.management)
+configurations.testCompileClasspath.extendsFrom(configurations.management)
+configurations.testRuntimeClasspath.extendsFrom(configurations.management)
 
 repositories {
     mavenCentral()
