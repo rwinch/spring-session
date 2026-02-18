@@ -1,8 +1,0 @@
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        maven { url 'https://repo.spring.io/plugins-release' }
-    }
-}
-
-rootProject.name = 'spring-session-sample-boot-websocket'
