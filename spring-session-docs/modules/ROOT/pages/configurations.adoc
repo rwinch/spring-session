@@ -1,4 +1,0 @@
-[[configuration]]
-= Configuration
-
-This section provides guidance on how to further configure Spring Session for each of its supported datastores.
