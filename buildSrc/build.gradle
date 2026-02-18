@@ -6,23 +6,6 @@ plugins {
 
 sourceCompatibility = JavaVersion.VERSION_17
 
-repositories {
-    gradlePluginPortal()
-    mavenCentral()
-    maven { url 'https://repo.spring.io/plugins-release/' }
-    maven { url 'https://repo.spring.io/snapshot' }
-}
-
-sourceSets {
-    main {
-        java {
-            srcDirs = []
-        }
-        groovy {
-            srcDirs += ["src/main/java"]
-        }
-    }
-}
 
 gradlePlugin {
     plugins {
@@ -33,19 +16,9 @@ gradlePlugin {
     }
 }
 
-configurations {
-    implementation {
-        exclude module: 'groovy-all'
-    }
-}
 
 dependencies {
     implementation localGroovy()
 
 }
 
-
-test {
-    onlyIf { !project.hasProperty("buildSrc.skipTests") }
-    useJUnitPlatform()
-}
