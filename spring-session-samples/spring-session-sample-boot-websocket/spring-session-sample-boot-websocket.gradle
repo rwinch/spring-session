@@ -1,7 +1,7 @@
 apply plugin: 'io.spring.convention.spring-sample-boot'
 
 dependencies {
-	management platform(project(":spring-session-dependencies"))
+	management platform(libs.org.testcontainers.testcontainers.bom)
 
 
 	integrationTestCompile "org.testcontainers:testcontainers"
