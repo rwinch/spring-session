@@ -5,19 +5,8 @@ pluginManagement {
     }
 }
 
-plugins {
-    id "com.gradle.develocity" version "3.17.6"
-    id "io.spring.ge.conventions" version "0.0.17"
-}
-
 rootProject.name = 'spring-session-build'
 
-file('spring-session-samples').eachDirMatch(~/spring-session-sample-.*/) { dir ->
-    include dir.name
-    project(":$dir.name").projectDir = dir
-}
+include 'spring-session-samples:spring-session-sample-boot-websocket'
 
-rootProject.children.each { project ->
-    project.buildFileName = "${project.name}.gradle"
-}
 
