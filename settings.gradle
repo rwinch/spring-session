@@ -12,8 +12,6 @@ plugins {
 
 rootProject.name = 'spring-session-build'
 
-include 'spring-session-dependencies'
-
 file('spring-session-samples').eachDirMatch(~/spring-session-sample-.*/) { dir ->
     include dir.name
     project(":$dir.name").projectDir = dir
